@@ -1,100 +1,98 @@
-# CNNProto - Time Series Classification with Prototypes
+# CNN Prototype Attention Model for Time Series Classification
 
-A CNN-based prototype attention model for time series classification using UCR/UEA datasets.
+## Overview
 
-## 🚀 Quick Start
+This repository implements a CNN-based prototype attention model for time series classification. The model learns interpretable prototypes in the feature space and uses attention mechanisms to make predictions based on similarity to these prototypes.
 
-### 1. Install Dependencies
+## Requirements
 
-First, install all required packages:
+- Python 3.8 or higher
+- PyTorch 2.0.0 or higher
+- NumPy 1.24.0 or higher
+- scikit-learn 1.3.0 or higher
+- matplotlib 3.7.0 or higher
+- PyYAML 6.0 or higher
 
+## Installation
+
+1. Clone the repository:
+```bash
+git clone https://github.com/cminh0929/CNNPrototypeAtt.git
+cd CNNPrototypeAtt
+```
+
+2. Create and activate a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
+
+3. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-This will install:
-- PyTorch (deep learning framework)
-- NumPy (numerical computing)
-- scikit-learn (metrics and PCA)
-- matplotlib (visualization)
-- tslearn (UCR/UEA time series datasets)
-- PyYAML (configuration files)
+## Dataset Preparation
 
-### 2. Run the Code
+This project uses datasets from the UCR Time Series Archive.
 
-#### Basic Usage
+1. Download datasets from:
+   - https://www.cs.ucr.edu/~eamonn/time_series_data_2018/
+   - http://timeseriesclassification.com/
 
-Run with the default dataset (ElectricDevices):
-
-```bash
-python main.py
+2. Extract the downloaded files and place them in the `datasets/` directory with the following structure:
+```
+datasets/
+├── DatasetName1/
+│   ├── DatasetName1_TRAIN.tsv
+│   └── DatasetName1_TEST.tsv
+├── DatasetName2/
+│   ├── DatasetName2_TRAIN.tsv
+│   └── DatasetName2_TEST.tsv
+└── ...
 ```
 
-#### Run with Different Datasets
+Each dataset folder must contain two files:
+- `{DatasetName}_TRAIN.tsv` - Training data
+- `{DatasetName}_TEST.tsv` - Test data
 
-You can modify the dataset in `main.py` by changing the default parameter, or run it programmatically:
-
-```python
-from main import main
-
-# Run with a specific dataset
-main("GunPoint")
-main("ECG200")
-main("FordA")
-main("Coffee")
-```
-
-### 3. Available UCR/UEA Datasets
-
-Popular datasets you can try:
-- `GunPoint` - Small dataset, good for testing
-- `ECG200` - ECG signals classification
-- `FordA` - Engine noise classification
-- `Wafer` - Semiconductor wafer classification
-- `Coffee` - Coffee/non-coffee classification
-- `ElectricDevices` - Electric device classification (default)
-- And many more from the UCR archive!
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 CNNProto/
 ├── config/
-│   ├── __init__.py
 │   └── config_manager.py      # Configuration management
 ├── data/
-│   ├── __init__.py
 │   ├── dataloader_manager.py  # Data loading and preprocessing
 │   └── dataset.py             # PyTorch Dataset wrapper
 ├── models/
-│   ├── __init__.py
 │   ├── cnn_backbone.py        # CNN feature extractor
-│   ├── cnn_proto_attention.py # Complete model
+│   ├── cnn_proto_attention.py # Complete model architecture
 │   └── prototype.py           # Prototype learning module
 ├── training/
-│   ├── __init__.py
 │   ├── evaluator.py           # Model evaluation
 │   └── trainer.py             # Training loop
 ├── utils/
-│   ├── __init__.py
 │   ├── device.py              # Device management
 │   └── seed.py                # Random seed setting
 ├── visualization/
-│   ├── __init__.py
-│   └── visualizer.py          # PCA and training plots
+│   └── visualizer.py          # Visualization utilities
 ├── config.yaml                # Configuration file
-├── requirements.txt           # Python dependencies
-└── main.py                    # Main entry point
+├── main.py                    # Main entry point
+└── requirements.txt           # Python dependencies
 ```
 
-## ⚙️ Configuration
+## Configuration
 
-Edit `config.yaml` to customize hyperparameters:
+Model and training parameters can be configured in `config.yaml`. The configuration file supports:
 
-### Default Settings
+- Default parameters applied to all datasets
+- Dataset-specific parameter overrides
+
+Example configuration:
 ```yaml
 default:
-  num_prototypes: null        # Auto-calculate (num_classes * 2)
+  num_prototypes: null        # Auto-calculate as num_classes * 2
   dropout: 0.1
   temperature: 1.0
   batch_size: 32
@@ -106,104 +104,76 @@ default:
   early_stopping_patience: 20
   seed: 42
   device: auto                # 'auto', 'cuda', or 'cpu'
-```
+  plot_pca: true
+  plot_training: true
 
-### Dataset-Specific Settings
-
-You can override default settings for specific datasets:
-
-```yaml
-GunPoint:
+DatasetName:
   num_prototypes: 6
-  dropout: 0.2
   batch_size: 16
   epochs: 150
 ```
 
-## 🎯 What the Code Does
+## Training
 
-1. **Loads Configuration**: Reads settings from `config.yaml`
-2. **Sets Random Seed**: Ensures reproducibility
-3. **Loads Dataset**: Downloads and preprocesses UCR/UEA dataset
-4. **Creates Model**: Builds CNN + Prototype Attention model
-5. **Trains Model**: Trains with early stopping and learning rate scheduling
-6. **Evaluates**: Tests on test set and shows metrics
-7. **Visualizes**: 
-   - PCA plot of features and prototypes
-   - Training curves (loss and accuracy)
+To train the model on a specific dataset, modify the `dataset_name` parameter in `main.py`:
 
-## 📊 Output
-
-The code will:
-- Print training progress (loss, accuracy per epoch)
-- Show final evaluation metrics (accuracy, F1-score, classification report)
-- Generate visualizations:
-  - `pca_visualization.png` - PCA plot of learned features
-  - `training_curves.png` - Training history plots
-
-## 💡 Example Output
-
-```
-======================================================================
-DATA LOADING: GunPoint
-======================================================================
-Raw shape: (50, 150)
- UNIVARIATE
- Applying PER-CHANNEL Z-SCORE NORMALIZATION... Done (univariate global norm)
-Classes: 2
-Time steps: 150
-Train size: 50 | Test size: 150
-======================================================================
-
- Model: 234,562 parameters
-
-======================================================================
-TRAINING
-======================================================================
-Epoch   1/150 | Loss: 0.6234 | Train: 0.7200 | Test: 0.8133 | LR: 0.001000
-Epoch   2/150 | Loss: 0.4521 | Train: 0.8400 | Test: 0.8667 | LR: 0.001000
-...
-======================================================================
-
-======================================================================
-EVALUATION RESULTS
-======================================================================
-Accuracy: 0.9133 (91.33%)
-F1-Score: 0.9128
-...
-======================================================================
-
-======================================================================
-FINAL SUMMARY
-======================================================================
-Dataset:        GunPoint
-Type:           UNIVARIATE
-Channels:       1
-Classes:        2
-Final accuracy: 0.9133 (91.33%)
-======================================================================
+```python
+def main(dataset_name: str = "GunPoint") -> None:
+    ...
 ```
 
-## 🔧 Troubleshooting
-
-### CUDA Out of Memory
-Reduce batch size in `config.yaml`:
-```yaml
-batch_size: 16  # or 8
-```
-
-### Dataset Download Issues
-The first run will download the dataset. Ensure you have internet connection.
-
-### Import Errors
-Make sure all dependencies are installed:
+Then run:
 ```bash
-pip install -r requirements.txt
+python main.py
 ```
 
-## 📝 Notes
+The training process will:
+1. Load and preprocess the dataset
+2. Initialize the model with specified parameters
+3. Train with early stopping based on validation accuracy
+4. Evaluate on the test set
+5. Generate visualizations
 
-- First run will download the dataset (may take a few minutes)
-- GPU is automatically used if available
-- All code uses type hints and PEP 257 docstrings
-- Training uses early stopping to prevent overfitting
+## Evaluation
+
+The model is evaluated using:
+- Accuracy
+- F1-score (macro-averaged)
+- Per-class precision, recall, and F1-score
+
+Evaluation results are printed to the console and include a detailed classification report.
+
+## Visualization
+
+The following visualizations are automatically generated during training:
+
+1. `pca_visualization.png` - PCA projection of learned features and prototypes
+2. `training_curves.png` - Training loss, accuracy, and generalization gap
+3. `confusion_matrix.png` - Confusion matrix (counts and normalized)
+4. `prototype_heatmap.png` - Learned prototype patterns
+5. `sample_predictions.png` - Sample predictions with confidence scores
+
+## Model Architecture
+
+The model consists of three main components:
+
+1. **CNN Backbone**: Extracts features from input time series
+2. **Prototype Layer**: Learns interpretable prototypes in feature space
+3. **Attention Mechanism**: Computes similarity-based attention weights for classification
+
+## Citation
+
+If you use this code in your research, please cite:
+
+```bibtex
+@software{cnn_prototype_attention,
+  author = {Your Name},
+  title = {CNN Prototype Attention Model for Time Series Classification},
+  year = {2025},
+  url = {https://github.com/cminh0929/CNNPrototypeAtt}
+}
+```
+
+## License
+
+This project is licensed under the MIT License.

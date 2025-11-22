@@ -1,89 +1,91 @@
-# Quick Start Guide
+# Quickstart Guide
 
-## ✅ Virtual Environment Setup Complete!
+## Prerequisites
 
-Your Python 3.14 virtual environment is ready with all dependencies installed.
+Ensure you have Python 3.8 or higher installed.
 
-## 🚀 How to Use
+## Setup
 
-### 1. Activate the Virtual Environment
-
-**Option A: Use the activation script (Recommended)**
+1. Clone the repository:
 ```bash
-activate.bat
+git clone https://github.com/cminh0929/CNNPrototypeAtt.git
+cd CNNPrototypeAtt
 ```
 
-**Option B: Manual activation**
+2. Install dependencies:
 ```bash
-venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
-You'll see `(venv)` in your command prompt when activated.
+## Download Dataset
 
-### 2. Run the Code
+1. Visit the UCR Time Series Archive:
+   - https://www.cs.ucr.edu/~eamonn/time_series_data_2018/
 
+2. Download a dataset (e.g., GunPoint)
+
+3. Extract and place in `datasets/`:
+```
+datasets/
+└── GunPoint/
+    ├── GunPoint_TRAIN.tsv
+    └── GunPoint_TEST.tsv
+```
+
+## Run Training
+
+1. Open `main.py` and set the dataset name:
+```python
+def main(dataset_name: str = "GunPoint") -> None:
+```
+
+2. Run the training script:
 ```bash
 python main.py
 ```
 
-### 3. Deactivate (when done)
+## Expected Output
 
-```bash
-deactivate
+The script will:
+1. Load and preprocess the dataset
+2. Train the model with early stopping
+3. Evaluate on the test set
+4. Generate visualizations in the current directory
+
+## Configuration
+
+To modify training parameters, edit `config.yaml`:
+
+```yaml
+default:
+  batch_size: 32
+  epochs: 100
+  learning_rate: 0.001
 ```
 
-## 📦 Installed Packages
+For dataset-specific settings, add a section with the dataset name:
 
-- ✅ PyTorch 2.9.1
-- ✅ NumPy 2.3.5
-- ✅ scikit-learn 1.7.2
-- ✅ matplotlib 3.10.7
-- ✅ tslearn 0.7.0
-- ✅ PyYAML 6.0.3
-
-## 🎯 Quick Test
-
-After activating the environment, test if everything works:
-
-```bash
-python -c "import torch; import numpy; import sklearn; import matplotlib; import tslearn; print('All imports successful!')"
+```yaml
+GunPoint:
+  batch_size: 16
+  epochs: 150
 ```
 
-## 📝 Notes
+## Common Datasets
 
-- **Python Version**: 3.14.0 (newer than requested 3.10, but fully compatible)
-- **tslearn**: Installed without numba dependency (numba doesn't support Python 3.14 yet)
-- **GPU Support**: PyTorch will automatically use CUDA if available
+Small datasets for quick testing:
+- GunPoint (50 train, 150 test)
+- Coffee (28 train, 28 test)
+- ECG200 (100 train, 100 test)
 
-## 🔄 Changing Datasets
+Medium datasets:
+- FordA (3601 train, 1320 test)
+- Wafer (1000 train, 6164 test)
 
-Edit `main.py` line 15 to change the dataset:
+## Troubleshooting
 
-```python
-def main(dataset_name: str = "GunPoint") -> None:  # Change dataset here
-```
+**CUDA out of memory**: Reduce `batch_size` in `config.yaml`
 
-Popular options:
-- `GunPoint` - Small, fast
-- `ECG200` - ECG signals
-- `Coffee` - Coffee classification
-- `ElectricDevices` - Default dataset
+**Dataset not found**: Verify the dataset folder structure matches the required format
 
-## 🐛 Troubleshooting
-
-### Virtual environment not activating?
-Make sure you're in the project directory:
-```bash
-cd c:\Users\cminh\Desktop\Code\CNNProto
-```
-
-### Import errors?
-Verify packages are installed:
-```bash
-venv\Scripts\python.exe -m pip list
-```
-
-### Need to reinstall?
-```bash
-venv\Scripts\python.exe -m pip install -r requirements.txt
-```
+**Import errors**: Ensure all dependencies are installed via `pip install -r requirements.txt`
