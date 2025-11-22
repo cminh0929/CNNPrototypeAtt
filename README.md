@@ -161,19 +161,3 @@ The model consists of three main components:
 2. **Prototype Layer**: Learns interpretable prototypes in feature space
 3. **Attention Mechanism**: Computes similarity-based attention weights for classification
 
-## Citation
-
-If you use this code in your research, please cite:
-
-```bibtex
-@software{cnn_prototype_attention,
-  author = {Your Name},
-  title = {CNN Prototype Attention Model for Time Series Classification},
-  year = {2025},
-  url = {https://github.com/cminh0929/CNNPrototypeAtt}
-}
-```
-
-## License
-
-This project is licensed under the MIT License.
