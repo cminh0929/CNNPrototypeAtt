@@ -38,5 +38,13 @@
     "epochs": 63,
     "training_time": 8.717410326004028,
     "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T10:43:24.293725",
+    "run_id": "20251125_104324",
+    "accuracy": 0.9854227405247813,
+    "epochs": 84,
+    "training_time": 11.99416184425354,
+    "is_best": false
   }
 ]

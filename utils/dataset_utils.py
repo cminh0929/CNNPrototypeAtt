@@ -92,26 +92,3 @@ def list_datasets(datasets_dir: str = "datasets", verbose: bool = True) -> List[
         print("-" * 70)
 
     return all_items
-
-
-def get_dataset_info(dataset_name: str, datasets_dir: str = "datasets") -> Dict[str, str]:
-    """Get basic information about a dataset.
-
-    Args:
-        dataset_name: Name of the dataset.
-        datasets_dir: Directory containing datasets.
-
-    Returns:
-        Dictionary with dataset file paths and validation status.
-    """
-    dataset_path = Path(datasets_dir) / dataset_name
-    train_file = dataset_path / f"{dataset_name}_TRAIN.tsv"
-    test_file = dataset_path / f"{dataset_name}_TEST.tsv"
-
-    return {
-        "name": dataset_name,
-        "path": str(dataset_path.absolute()),
-        "train_file": str(train_file.absolute()),
-        "test_file": str(test_file.absolute()),
-        "is_valid": validate_dataset(dataset_name, datasets_dir)
-    }

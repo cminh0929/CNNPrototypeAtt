@@ -1,23 +1,23 @@
 {
   "run_info": {
-    "dataset": "FordA",
-    "timestamp": "2025-11-25T12:17:30.996069",
-    "run_id": "20251125_121730"
+    "dataset": "ECG200",
+    "timestamp": "2025-11-25T11:37:00.992355",
+    "run_id": "20251125_113700"
   },
   "performance": {
-    "test_accuracy": 0.9416666666666667,
-    "best_epoch": 79,
-    "total_epochs": 129,
-    "training_time_seconds": 627.7094349861145,
+    "test_accuracy": 0.89,
+    "best_epoch": 26,
+    "total_epochs": 76,
+    "training_time_seconds": 12.241397857666016,
     "model_parameters": 274178
   },
   "dataset_info": {
     "type": "UNIVARIATE",
     "channels": 1,
     "classes": 2,
-    "time_steps": 500,
-    "train_samples": 3601,
-    "test_samples": 1320
+    "time_steps": 96,
+    "train_samples": 100,
+    "test_samples": 100
   },
   "hyperparameters": {
     "num_prototypes": null,
@@ -49,20 +49,20 @@
   },
   "training_summary": {
     "loss": {
-      "min": 0.2647,
-      "final": 0.2647
+      "min": 0.218,
+      "final": 0.2351
     },
     "train_accuracy": {
-      "best": 0.9497,
-      "final": 0.9486
+      "best": 0.98,
+      "final": 0.96
     },
     "test_accuracy": {
-      "best": 0.9417,
-      "final": 0.9303
+      "best": 0.89,
+      "final": 0.86
     },
     "generalization_gap": {
-      "at_best_epoch": 0.0081,
-      "final": 0.0183
+      "at_best_epoch": 0.09,
+      "final": 0.1
     }
   }
 }

@@ -278,54 +278,7 @@ class ResultsManager:
         for file in current_dir.glob("*.png"):
             shutil.copy2(file, best_dir / file.name)
 
-    def load_result(self, dataset_name: str, filename: str = "current.json") -> Optional[Dict[str, Any]]:
-        """Load experiment results from a JSON file.
 
-        Args:
-            dataset_name: Name of the dataset.
-            filename: Name of the result file (default: current.json).
-
-        Returns:
-            Dictionary containing result data, or None if not found.
-        """
-        filepath = self.results_dir / dataset_name / filename
-
-        if not filepath.exists():
-            print(f"Result file not found: {filepath}")
-            return None
-
-        with open(filepath, 'r', encoding='utf-8') as f:
-            return json.load(f)
-
-    def print_history(self, dataset_name: str, limit: int = 10) -> None:
-        """Print run history for a dataset.
-
-        Args:
-            dataset_name: Name of the dataset.
-            limit: Maximum number of recent runs to display.
-        """
-        history = self.load_history(dataset_name)
-        
-        if not history:
-            print(f"No run history found for {dataset_name}")
-            return
-
-        print(f"\nRun History for {dataset_name}")
-        print("-" * 80)
-        print(f"{'Run ID':<18} {'Accuracy':<12} {'Epochs':<8} {'Time (s)':<10} {'Best':<6}")
-        print("-" * 80)
-
-        for run in history[-limit:]:
-            run_id = run["run_id"]
-            acc = run["accuracy"]
-            epochs = run["epochs"]
-            time_s = run["training_time"]
-            is_best = "YES" if run.get("is_best", False) else ""
-            
-            print(f"{run_id:<18} {acc:.4f} ({acc*100:5.2f}%) {epochs:<8} {time_s:<10.2f} {is_best:<6}")
-
-        print("-" * 80)
-        print(f"Total runs: {len(history)}")
 
     def generate_summary(
         self,
