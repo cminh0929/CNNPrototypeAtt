@@ -1,181 +1,280 @@
-# Results Structure Documentation
+# Results Directory
 
-## Overview
-
-The results management system now tracks best models, maintains run history, and organizes visualizations intelligently.
+This directory contains all experimental results, visualizations, and performance metrics for the CNNProto model.
 
 ## Directory Structure
 
 ```
 results/
-└── GunPoint/
-    ├── current.json              # Latest run results
-    ├── best.json                 # Best run results (highest accuracy)
-    ├── history.json              # All runs history
-    └── visualizations/
-        ├── current/              # Latest run visualizations
-        │   ├── pca_visualization.png
-        │   ├── training_curves.png
-        │   ├── confusion_matrix.png
-        │   ├── prototype_heatmap.png
-        │   └── sample_predictions.png
-        └── best/                 # Best run visualizations (auto-updated)
-            ├── pca_visualization.png
-            ├── training_curves.png
-            ├── confusion_matrix.png
-            ├── prototype_heatmap.png
-            └── sample_predictions.png
+├── {DatasetName}/
+│   ├── current.json                    # Latest experiment results
+│   ├── best.json                       # Best performing run
+│   ├── history.json                    # All experiment runs
+│   ├── visualizations/
+│   │   ├── current/                    # Latest run visualizations
+│   │   │   ├── pca_visualization.png
+│   │   │   ├── training_curves.png
+│   │   │   ├── confusion_matrix.png
+│   │   │   ├── prototype_heatmap.png
+│   │   │   └── sample_predictions.png
+│   │   └── best/                       # Best run visualizations
+│   │       └── (same files as current)
+│   └── evaluation/
+│       └── results.json                # Evaluation script results
+├── comparison_table.csv                # Cross-dataset comparison
+├── comparison_table.xlsx               # Excel version
+└── summary_YYYYMMDD_HHMMSS.json       # Batch run summary
 ```
 
-## File Descriptions
+## File Formats
 
-### current.json
-Contains results from the most recent run with simplified, readable format:
+### Result JSON Files
 
+**`current.json`** - Latest experiment:
 ```json
 {
-  "run_info": {
-    "dataset": "GunPoint",
-    "timestamp": "2025-11-24T17:12:00",
-    "run_id": "20251124_171200"
-  },
-  "performance": {
-    "test_accuracy": 0.9267,
-    "best_epoch": 87,
-    "total_epochs": 107,
-    "training_time_seconds": 45.23,
-    "model_parameters": 143106
-  },
-  "dataset_info": {
-    "type": "UNIVARIATE",
-    "channels": 1,
-    "classes": 2,
-    "time_steps": 150,
-    "train_samples": 50,
-    "test_samples": 150
-  },
+  "run_id": "20251125_123456",
+  "timestamp": "2025-11-25T12:34:56",
+  "dataset_name": "GunPoint",
   "hyperparameters": {
-    "num_prototypes": 6,
-    "dropout": 0.2,
+    "num_prototypes": 4,
+    "dropout": 0.1,
     "temperature": 0.5,
-    "batch_size": 16,
+    "batch_size": 8,
     "learning_rate": 0.0005,
     "weight_decay": 0.0001,
-    "diversity_weight": 0.01
+    "diversity_weight": 0.05,
+    "use_augmentation": true,
+    "augmentation_config": {...},
+    "use_projection": true,
+    "projection_dim": 256,
+    "clustering_weight": 0.1,
+    "clustering_config": {...}
+  },
+  "dataset_info": {
+    "input_channels": 1,
+    "num_classes": 2,
+    "time_steps": 150,
+    "train_size": 50,
+    "test_size": 150
+  },
+  "final_metrics": {
+    "test_accuracy": 0.9867,
+    "best_epoch": 127,
+    "total_epochs": 177,
+    "training_time": 45.32,
+    "total_parameters": 274178
   },
   "training_summary": {
-    "loss": {
-      "min": 0.3421,
-      "final": 0.4156
-    },
-    "train_accuracy": {
-      "best": 0.9200,
-      "final": 0.8800
-    },
-    "test_accuracy": {
-      "best": 0.9267,
-      "final": 0.9267
-    },
-    "generalization_gap": {
-      "at_best_epoch": 0.0067,
-      "final": -0.0467
-    }
+    "best_train_acc": 1.0,
+    "best_test_acc": 0.9867,
+    "final_train_acc": 1.0,
+    "final_test_acc": 0.98,
+    "min_train_loss": 0.0234,
+    "min_test_loss": 0.0456,
+    "generalization_gap": 0.0133
   }
 }
 ```
 
-### best.json
-Same format as `current.json`, but contains the run with highest test accuracy.
-**Only updated when a new run achieves better accuracy.**
+**`best.json`** - Best performing run (same format as `current.json`)
 
-### history.json
-Tracks all runs with summary information:
-
+**`history.json`** - All experiment runs:
 ```json
 [
   {
-    "timestamp": "2025-11-24T16:35:25",
-    "run_id": "20251124_163525",
-    "accuracy": 0.8533,
-    "epochs": 95,
-    "training_time": 38.5,
+    "run_id": "20251125_120000",
+    "timestamp": "2025-11-25T12:00:00",
+    "accuracy": 0.9733,
+    "epochs": 150,
+    "training_time": 42.1,
     "is_best": false
   },
   {
-    "timestamp": "2025-11-24T17:01:48",
-    "run_id": "20251124_170148",
-    "accuracy": 0.7467,
-    "epochs": 15,
-    "training_time": 3.06,
-    "is_best": false
-  },
-  {
-    "timestamp": "2025-11-24T17:12:00",
-    "run_id": "20251124_171200",
-    "accuracy": 0.9267,
-    "epochs": 107,
-    "training_time": 45.23,
+    "run_id": "20251125_123456",
+    "timestamp": "2025-11-25T12:34:56",
+    "accuracy": 0.9867,
+    "epochs": 177,
+    "training_time": 45.32,
     "is_best": true
   }
 ]
 ```
 
-## Behavior
+### Summary Files
 
-### When Running an Experiment
+**`summary_YYYYMMDD_HHMMSS.json`** - Batch run summary:
+```json
+{
+  "timestamp": "2025-11-25T15:30:00",
+  "total_datasets": 12,
+  "results": [
+    {
+      "dataset": "GunPoint",
+      "accuracy": 0.9867,
+      "epochs": 177,
+      "time": 45.32,
+      "parameters": 274178
+    },
+    ...
+  ],
+  "statistics": {
+    "mean_accuracy": 0.8542,
+    "std_accuracy": 0.0823,
+    "total_time": 542.1
+  }
+}
+```
 
-1. **Always saves to `current.json`** - Latest run results
-2. **Always saves visualizations to `visualizations/current/`** - Latest run plots
-3. **Compares with `best.json`**:
-   - If current accuracy > best accuracy (or no best exists):
-     - Updates `best.json`
-     - Copies visualizations to `visualizations/best/`
-     - Prints "NEW BEST RESULT!" message
-   - Otherwise:
-     - Keeps existing `best.json` unchanged
-     - Keeps existing `visualizations/best/` unchanged
-     - Prints current vs best comparison
-4. **Appends to `history.json`** - Adds run summary with timestamp
+### Comparison Tables
 
-### Advantages
+**`comparison_table.csv`** - Cross-dataset comparison:
+```csv
+Dataset,Train Size,Test Size,Classes,Accuracy,Epochs,Time (s),Parameters
+GunPoint,50,150,2,0.9867,177,45.32,274178
+Coffee,28,28,2,0.9643,234,32.15,274178
+...
+```
 
-✅ **Easy comparison**: Compare current vs best results side-by-side
-✅ **Track progress**: See all runs in history.json
-✅ **Best model preserved**: Best visualizations never overwritten unless improved
-✅ **Readable JSON**: Simplified structure, clear field names
-✅ **Organized**: Separate folders for current and best visualizations
+## Visualizations
 
-## Usage Examples
+### 1. PCA Visualization (`pca_visualization.png`)
+- 2D PCA projection of learned features
+- Prototypes shown as stars
+- Color-coded by class
+- Shows feature space organization
 
-### View Current Results
+### 2. Training Curves (`training_curves.png`)
+- **Top**: Training and test loss over epochs
+- **Middle**: Training and test accuracy over epochs
+- **Bottom**: Generalization gap (train_acc - test_acc)
+- Vertical line indicates best epoch
+
+### 3. Confusion Matrix (`confusion_matrix.png`)
+- **Left**: Count-based confusion matrix
+- **Right**: Normalized confusion matrix
+- Shows per-class performance
+- Diagonal = correct predictions
+
+### 4. Prototype Heatmap (`prototype_heatmap.png`)
+- Learned prototype patterns
+- Each row = one prototype
+- Shows temporal patterns captured
+- Useful for interpretability
+
+### 5. Sample Predictions (`sample_predictions.png`)
+- 6 random test samples
+- Original time series plot
+- Predicted vs true label
+- Confidence score
+- Visual verification of model performance
+
+## Usage
+
+### Accessing Results
+
 ```python
 from utils.results_manager import ResultsManager
 
-rm = ResultsManager()
-current = rm.load_result("GunPoint", "current.json")
-print(f"Current accuracy: {current['performance']['test_accuracy']}")
+# Initialize manager
+results_manager = ResultsManager()
+
+# Load best result for a dataset
+best_result = results_manager.load_best_result("GunPoint")
+print(f"Best accuracy: {best_result['final_metrics']['test_accuracy']}")
+
+# Load history
+history = results_manager.load_history("GunPoint")
+print(f"Total runs: {len(history)}")
 ```
 
-### View Best Results
+### Generating Comparison Tables
+
 ```python
-best = rm.load_result("GunPoint", "best.json")
-print(f"Best accuracy: {best['performance']['test_accuracy']}")
+# After running multiple datasets
+python main.py --all
+
+# Results automatically saved to:
+# - results/summary_YYYYMMDD_HHMMSS.json
+# - results/comparison_table.csv
+# - results/comparison_table.xlsx
 ```
 
-### View Run History
-```python
-rm.print_history("GunPoint", limit=10)
-```
+## Best Practices
 
-Output:
-```
-Run History for GunPoint
---------------------------------------------------------------------------------
-Run ID             Accuracy     Epochs   Time (s)   Best
---------------------------------------------------------------------------------
-20251124_163525    0.8533 (85.33%) 95       38.50      
-20251124_170148    0.7467 (74.67%) 15       3.06       
-20251124_171200    0.9267 (92.67%) 107      45.23      YES
---------------------------------------------------------------------------------
-Total runs: 3
-```
+### 1. Result Tracking
+- **current.json**: Always updated with latest run
+- **best.json**: Only updated when accuracy improves
+- **history.json**: Keeps all runs for analysis
+
+### 2. Visualization Management
+- **current/**: Latest experiment visualizations
+- **best/**: Automatically copied when new best is achieved
+- Compare current vs best to see improvements
+
+### 3. Experiment Comparison
+- Use `history.json` to track hyperparameter tuning
+- Use `comparison_table.csv` for cross-dataset analysis
+- Use `summary_*.json` for batch run statistics
+
+## Metrics Explained
+
+### Accuracy
+- Primary metric: Test set accuracy
+- Range: [0.0, 1.0]
+- Higher is better
+
+### Generalization Gap
+- `gap = train_accuracy - test_accuracy`
+- Lower gap = better generalization
+- High gap may indicate overfitting
+
+### Training Time
+- Wall-clock time in seconds
+- Includes data loading, training, and evaluation
+- Useful for efficiency comparison
+
+### Parameters
+- Total number of model parameters
+- Varies with:
+  - `use_projection`: +131K params
+  - `num_prototypes`: ~1K params per prototype
+
+## Notes
+
+### Result Persistence
+- Results are never overwritten (except `current.json`)
+- Each run gets unique timestamp
+- History accumulates all experiments
+
+### Storage Considerations
+- Visualizations: ~5MB per dataset
+- JSON files: ~100KB per dataset
+- Consider cleaning old runs periodically
+
+### Reproducibility
+- All hyperparameters saved in result files
+- Random seed tracked
+- Dataset info included
+- Can reproduce any experiment from saved config
+
+## Troubleshooting
+
+### Missing Visualizations
+- Check if `plot_pca` and `plot_training` are enabled in config
+- Ensure matplotlib backend is properly configured
+- Check file permissions in results directory
+
+### Large History Files
+- History grows with each run
+- Consider archiving old runs
+- Can manually edit `history.json` if needed
+
+### Comparison Table Not Generated
+- Only created when using `--all` flag
+- Requires multiple dataset results
+- Check write permissions
+
+---
+
+For more information, see the main [README.md](../README.md) in the project root.
