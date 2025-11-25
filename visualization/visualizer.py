@@ -49,13 +49,16 @@ class Visualizer:
             # Use hsv for many classes
             return plt.cm.hsv(np.linspace(0, 0.9, n_colors))
 
-    def plot_pca(self, dataloader: DataLoader, num_classes: int, save_path: str = 'pca_visualization.png') -> None:
+    def plot_pca(self, dataloader: DataLoader, num_classes: int, 
+                 save_path: str = 'pca_visualization.png', max_samples: int = 5000) -> None:
         """Generate enhanced PCA visualization with modern styling.
 
         Args:
             dataloader: DataLoader for the dataset.
             num_classes: Number of classes in the dataset.
             save_path: Path to save the visualization.
+            max_samples: Maximum number of samples to use for PCA (default: 5000).
+                        Prevents memory issues with large datasets.
         """
         print("\nGenerating PCA visualization...")
 
@@ -63,15 +66,22 @@ class Visualizer:
 
         features_list: List[NDArray[np.float32]] = []
         labels_list: List[NDArray[np.int_]] = []
+        total_samples = 0
+        
         with torch.no_grad():
             for X_batch, y_batch in dataloader:
                 X_batch = X_batch.to(self.device)
                 _, _, feats = self.model(X_batch)
                 features_list.append(feats.cpu().numpy())
                 labels_list.append(y_batch.numpy())
+                
+                total_samples += len(X_batch)
+                if total_samples >= max_samples:
+                    print(f"  [Info] Limiting to {max_samples} samples for PCA visualization")
+                    break
 
-        features = np.vstack(features_list)
-        labels = np.concatenate(labels_list)
+        features = np.vstack(features_list)[:max_samples]
+        labels = np.concatenate(labels_list)[:max_samples]
         prototypes = self.model.prototype.prototypes.detach().cpu().numpy()
 
         combined = np.vstack([features, prototypes])

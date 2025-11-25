@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "Chinatown",
-    "timestamp": "2025-11-25T10:43:24.293725",
-    "run_id": "20251125_104324"
+    "timestamp": "2025-11-25T15:45:00.059534",
+    "run_id": "20251125_154500"
   },
   "performance": {
     "test_accuracy": 0.9854227405247813,
     "best_epoch": 34,
     "total_epochs": 84,
-    "training_time_seconds": 11.99416184425354,
+    "training_time_seconds": 12.281949281692505,
     "model_parameters": 274178
   },
   "dataset_info": {

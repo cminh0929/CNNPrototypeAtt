@@ -3,6 +3,8 @@ import numpy as np
 from numpy.typing import NDArray
 from torch.utils.data import DataLoader
 import os
+from scipy.io import arff
+import pandas as pd
 
 from data.dataset import TimeSeriesDataset, AugmentedTimeSeriesDataset
 from data.augmentation import TimeSeriesAugmenter
@@ -59,6 +61,164 @@ class DataLoaderManager:
         X = data[:, 1:]
         return X, y
 
+    def _load_txt_file(self, filepath: str) -> Tuple[NDArray[np.float32], NDArray[np.int_]]:
+        """Load data from a TXT file (space-delimited, label in first column).
+
+        Args:
+            filepath: Path to the TXT file.
+
+        Returns:
+            Tuple of (X, y) where X is the time series data and y is the labels.
+        """
+        data = np.loadtxt(filepath, delimiter=' ')
+        y = data[:, 0].astype(int)
+        X = data[:, 1:]
+        return X, y
+
+    def _load_ts_file(self, filepath: str) -> Tuple[NDArray[np.float32], NDArray[np.int_]]:
+        """Load data from a TS file (comma-delimited, label after colon, with comments).
+        
+        Supports both univariate and multivariate time series:
+        - Univariate: values:label
+        - Multivariate: dim1_values:dim2_values:...:label
+
+        Args:
+            filepath: Path to the TS file.
+
+        Returns:
+            Tuple of (X, y) where X is the time series data and y is the labels.
+            For multivariate, X shape is (N, C, L) where C is number of channels.
+        """
+        X_list = []
+        y_list = []
+        
+        with open(filepath, 'r') as f:
+            for line in f:
+                line = line.strip()
+                # Skip empty lines and comments
+                if not line or line.startswith('#') or line.startswith('@') or line.startswith('%'):
+                    continue
+                
+                # Split by colon - last part is label, rest are dimensions
+                if ':' in line:
+                    parts = line.split(':')
+                    label_str = parts[-1].strip()
+                    
+                    # Try to parse as int, if fails keep as string
+                    try:
+                        label = int(label_str)
+                    except ValueError:
+                        label = label_str
+                    
+                    # All parts except the last are data dimensions
+                    dimensions = []
+                    for dim_str in parts[:-1]:
+                        # Parse comma-separated values for this dimension
+                        values = np.array([float(x) for x in dim_str.split(',')], dtype=np.float32)
+                        dimensions.append(values)
+                    
+                    # Stack dimensions: if univariate, shape is (L,); if multivariate, shape is (C, L)
+                    if len(dimensions) == 1:
+                        sample = dimensions[0]  # Univariate: (L,)
+                    else:
+                        sample = np.stack(dimensions, axis=0)  # Multivariate: (C, L)
+                    
+                    X_list.append(sample)
+                    y_list.append(label)
+        
+        # Convert to numpy array
+        if len(X_list) > 0:
+            # Check if univariate or multivariate
+            if X_list[0].ndim == 1:
+                # Univariate: (N, L)
+                X = np.array(X_list, dtype=np.float32)
+            else:
+                # Multivariate: (N, C, L)
+                X = np.array(X_list, dtype=np.float32)
+        else:
+            X = np.array([], dtype=np.float32)
+        
+        # Handle string labels (convert to integers)
+        y_array = np.array(y_list)
+        if y_array.dtype == object or y_array.dtype.kind in ['S', 'U', 'O']:
+            unique_labels = np.unique(y_array)
+            label_map = {label: idx for idx, label in enumerate(unique_labels)}
+            y = np.array([label_map[label] for label in y_array], dtype=int)
+        else:
+            y = y_array.astype(int)
+        
+        return X, y
+
+    def _load_csv_file(self, filepath: str) -> Tuple[NDArray[np.float32], NDArray[np.int_]]:
+        """Load data from a CSV file.
+
+        Args:
+            filepath: Path to the CSV file.
+
+        Returns:
+            Tuple of (X, y) where X is the time series data and y is the labels.
+        """
+        data = np.loadtxt(filepath, delimiter=',')
+        y = data[:, 0].astype(int)
+        X = data[:, 1:]
+        return X, y
+
+    def _load_arff_file(self, filepath: str) -> Tuple[NDArray[np.float32], NDArray[np.int_]]:
+        """Load data from an ARFF file.
+
+        Args:
+            filepath: Path to the ARFF file.
+
+        Returns:
+            Tuple of (X, y) where X is the time series data and y is the labels.
+        """
+        data, meta = arff.loadarff(filepath)
+        df = pd.DataFrame(data)
+        
+        # The last column is typically the class label in ARFF files
+        y = df.iloc[:, -1].values
+        
+        # Convert labels to integers if they are strings/bytes
+        if y.dtype == object or y.dtype.kind in ['S', 'U', 'O']:
+            unique_labels = np.unique(y)
+            label_map = {label: idx for idx, label in enumerate(unique_labels)}
+            y = np.array([label_map[label] for label in y], dtype=int)
+        else:
+            y = y.astype(int)
+        
+        # All other columns are features
+        X = df.iloc[:, :-1].values.astype(np.float32)
+        
+        return X, y
+
+    def _detect_and_load_file(self, filepath: str) -> Tuple[NDArray[np.float32], NDArray[np.int_]]:
+        """Detect file format and load data using the appropriate method.
+
+        Args:
+            filepath: Path to the data file.
+
+        Returns:
+            Tuple of (X, y) where X is the time series data and y is the labels.
+        
+        Raises:
+            ValueError: If file format is not supported.
+        """
+        _, ext = os.path.splitext(filepath)
+        ext = ext.lower()
+        
+        if ext == '.tsv':
+            return self._load_tsv_file(filepath)
+        elif ext == '.ts':
+            return self._load_ts_file(filepath)
+        elif ext == '.txt':
+            return self._load_txt_file(filepath)
+        elif ext == '.csv':
+            return self._load_csv_file(filepath)
+        elif ext == '.arff':
+            return self._load_arff_file(filepath)
+        else:
+            raise ValueError(f"Unsupported file format: {ext}. Supported formats: .tsv, .ts, .txt, .csv, .arff")
+
     def load_and_prepare(self) -> "DataLoaderManager":
         """Load dataset and prepare data loaders with normalization.
 
@@ -68,24 +228,39 @@ class DataLoaderManager:
         print("\nData Loading: {}".format(self.dataset_name))
         print("-" * 70)
 
-        # Construct file paths
+        # Construct dataset path
         dataset_path = os.path.join(self.datasets_dir, self.dataset_name)
-        train_file = os.path.join(dataset_path, f"{self.dataset_name}_TRAIN.tsv")
-        test_file = os.path.join(dataset_path, f"{self.dataset_name}_TEST.tsv")
-
-        # Check if files exist
-        if not os.path.exists(train_file):
-            raise FileNotFoundError(f"Training file not found: {train_file}")
-        if not os.path.exists(test_file):
-            raise FileNotFoundError(f"Test file not found: {test_file}")
+        
+        # Try to find files with supported extensions
+        supported_extensions = ['.tsv', '.ts', '.txt', '.csv', '.arff']
+        train_file = None
+        test_file = None
+        
+        for ext in supported_extensions:
+            train_candidate = os.path.join(dataset_path, f"{self.dataset_name}_TRAIN{ext}")
+            test_candidate = os.path.join(dataset_path, f"{self.dataset_name}_TEST{ext}")
+            
+            if os.path.exists(train_candidate) and os.path.exists(test_candidate):
+                train_file = train_candidate
+                test_file = test_candidate
+                print(f"Detected file format: {ext.upper()}")
+                break
+        
+        # Check if files were found
+        if train_file is None or test_file is None:
+            raise FileNotFoundError(
+                f"Dataset files not found for '{self.dataset_name}' in '{dataset_path}'.\n"
+                f"Expected files with extensions: {', '.join(supported_extensions)}\n"
+                f"Looking for: {self.dataset_name}_TRAIN.<ext> and {self.dataset_name}_TEST.<ext>"
+            )
 
         print(f"Loading from local files:")
         print(f"  Train: {train_file}")
         print(f"  Test:  {test_file}")
 
-        # Load data from TSV files
-        X_train, y_train = self._load_tsv_file(train_file)
-        X_test, y_test = self._load_tsv_file(test_file)
+        # Load data using auto-detection
+        X_train, y_train = self._detect_and_load_file(train_file)
+        X_test, y_test = self._detect_and_load_file(test_file)
 
         print(f"Raw shape: {X_train.shape}")
 
@@ -96,10 +271,16 @@ class DataLoaderManager:
             print(f"UNIVARIATE")
         elif X_train.ndim == 3:
             # Multivariate case: shape should be (N, C, L)
+            # Check if transpose is needed based on shape heuristic
             if X_train.shape[2] <= X_train.shape[1]:
+                print(f"\n[WARNING] Auto-transpose detected!")
+                print(f"  Original shape: {X_train.shape}")
+                print(f"  Assumption: dim1={X_train.shape[1]} is length, dim2={X_train.shape[2]} is channels")
+                print(f"  This assumes #channels <= #timesteps")
                 X_train = np.transpose(X_train, (0, 2, 1))
                 X_test = np.transpose(X_test, (0, 2, 1))
-                print(f"Transposed to: {X_train.shape} -> (N, C, L)")
+                print(f"  Transposed to: {X_train.shape} -> (N, C, L)")
+                print(f"  If this is incorrect, please format your data as (N, C, L)\n")
 
             self.input_channels = X_train.shape[1]
             if self.input_channels > 1:
@@ -112,13 +293,13 @@ class DataLoaderManager:
 
         print("Applying per-channel z-score normalization...", end="")
         def instance_norm(X):
-            # X shape: (N, C, L) hoặc (N, L)
-            # Tính mean/std dọc theo trục thời gian (trục cuối cùng)
+            # X shape: (N, C, L) or (N, L)
+            # Compute mean/std along time dimension (last axis)
             mean = X.mean(axis=-1, keepdims=True)
-            std = X.std(axis=-1, keepdims=True) + 1e-8 # Cộng epsilon để tránh chia cho 0
+            std = X.std(axis=-1, keepdims=True) + 1e-8  # Add epsilon to avoid division by zero
             return (X - mean) / std
 
-        # Áp dụng
+        # Apply instance normalization
         X_train = instance_norm(X_train)
         X_test = instance_norm(X_test)
         

@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "FiftyWords",
-    "timestamp": "2025-11-25T12:06:33.189816",
-    "run_id": "20251125_120633"
+    "timestamp": "2025-11-25T17:34:23.024611",
+    "run_id": "20251125_173423"
   },
   "performance": {
     "test_accuracy": 0.6461538461538462,
     "best_epoch": 116,
     "total_epochs": 166,
-    "training_time_seconds": 109.60871911048889,
+    "training_time_seconds": 99.06785202026367,
     "model_parameters": 311090
   },
   "dataset_info": {

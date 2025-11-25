@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "ECG200",
-    "timestamp": "2025-11-25T11:37:00.992355",
-    "run_id": "20251125_113700"
+    "timestamp": "2025-11-25T16:56:40.891376",
+    "run_id": "20251125_165640"
   },
   "performance": {
     "test_accuracy": 0.89,
     "best_epoch": 26,
     "total_epochs": 76,
-    "training_time_seconds": 12.241397857666016,
+    "training_time_seconds": 11.8244047164917,
     "model_parameters": 274178
   },
   "dataset_info": {

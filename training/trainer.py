@@ -58,6 +58,7 @@ class Trainer:
 
         self.best_model_state: Optional[Dict[str, Any]] = None
         self.best_acc: float = 0.0
+        self.best_epoch: int = 0
 
     def train_epoch(self, train_loader: DataLoader) -> Tuple[float, float]:
         """Train the model for one epoch.
@@ -115,7 +116,7 @@ class Trainer:
         test_loader: DataLoader,
         epochs: int = 50,
         early_stopping_patience: Optional[int] = 20
-    ) -> Dict[str, List[float]]:
+    ) -> Tuple[Dict[str, List[float]], int]:
         """Execute the full training loop.
 
         Args:
@@ -125,7 +126,7 @@ class Trainer:
             early_stopping_patience: Patience for early stopping.
 
         Returns:
-            Dictionary containing training history.
+            Tuple containing training history dictionary and best epoch number.
         """
         print("\nTraining")
         print("-" * 70)
@@ -155,6 +156,7 @@ class Trainer:
             if test_acc > best_test_acc:
                 best_test_acc = test_acc
                 patience_counter = 0
+                self.best_epoch = epoch + 1  # Store the best epoch (1-indexed)
                 self.best_model_state = copy.deepcopy(self.model.state_dict())
             else:
                 patience_counter += 1
@@ -174,7 +176,7 @@ class Trainer:
         print(f"Best test accuracy: {best_test_acc:.4f}")
         print("-" * 70)
 
-        return history
+        return history, self.best_epoch
 
     def _evaluate_epoch(self, dataloader: DataLoader) -> float:
         """Evaluate the model on a dataset.

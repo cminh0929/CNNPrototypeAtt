@@ -38,5 +38,29 @@
     "epochs": 51,
     "training_time": 3.0364630222320557,
     "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T12:32:58.544649",
+    "run_id": "20251125_123258",
+    "accuracy": 0.4,
+    "epochs": 51,
+    "training_time": 3.3358254432678223,
+    "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T15:03:01.141731",
+    "run_id": "20251125_150301",
+    "accuracy": 0.4,
+    "epochs": 51,
+    "training_time": 4.853365421295166,
+    "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T18:36:17.770410",
+    "run_id": "20251125_183617",
+    "accuracy": 0.4,
+    "epochs": 51,
+    "training_time": 3.0237903594970703,
+    "is_best": false
   }
 ]

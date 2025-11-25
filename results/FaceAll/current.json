@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "FaceAll",
-    "timestamp": "2025-11-25T12:02:43.653950",
-    "run_id": "20251125_120243"
+    "timestamp": "2025-11-25T17:29:38.360588",
+    "run_id": "20251125_172938"
   },
   "performance": {
-    "test_accuracy": 0.9284023668639053,
-    "best_epoch": 16,
-    "total_epochs": 66,
-    "training_time_seconds": 69.22299098968506,
+    "test_accuracy": 0.929585798816568,
+    "best_epoch": 32,
+    "total_epochs": 82,
+    "training_time_seconds": 98.65031242370605,
     "model_parameters": 283406
   },
   "dataset_info": {
@@ -49,20 +49,20 @@
   },
   "training_summary": {
     "loss": {
-      "min": 0.6037,
-      "final": 0.6254
+      "min": 0.5846,
+      "final": 0.5988
     },
     "train_accuracy": {
       "best": 1.0,
-      "final": 0.9964
+      "final": 0.9982
     },
     "test_accuracy": {
-      "best": 0.9284,
-      "final": 0.8988
+      "best": 0.9296,
+      "final": 0.8822
     },
     "generalization_gap": {
-      "at_best_epoch": 0.0716,
-      "final": 0.0976
+      "at_best_epoch": 0.0704,
+      "final": 0.116
     }
   }
 }

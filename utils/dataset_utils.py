@@ -43,10 +43,17 @@ def validate_dataset(dataset_name: str, datasets_dir: str = "datasets") -> bool:
     if not dataset_path.exists() or not dataset_path.is_dir():
         return False
 
-    train_file = dataset_path / f"{dataset_name}_TRAIN.tsv"
-    test_file = dataset_path / f"{dataset_name}_TEST.tsv"
-
-    return train_file.exists() and test_file.exists()
+    # Check for supported file formats
+    supported_extensions = ['.tsv', '.csv', '.arff', '.ts', '.txt']
+    
+    for ext in supported_extensions:
+        train_file = dataset_path / f"{dataset_name}_TRAIN{ext}"
+        test_file = dataset_path / f"{dataset_name}_TEST{ext}"
+        
+        if train_file.exists() and test_file.exists():
+            return True
+    
+    return False
 
 
 def list_datasets(datasets_dir: str = "datasets", verbose: bool = True) -> List[Tuple[str, bool]]:

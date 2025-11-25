@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "ChlorineConcentration",
-    "timestamp": "2025-11-25T10:48:01.785705",
-    "run_id": "20251125_104801"
+    "timestamp": "2025-11-25T15:52:37.058324",
+    "run_id": "20251125_155237"
   },
   "performance": {
     "test_accuracy": 0.6208333333333333,
     "best_epoch": 166,
     "total_epochs": 216,
-    "training_time_seconds": 273.0452263355255,
+    "training_time_seconds": 452.48611640930176,
     "model_parameters": 274947
   },
   "dataset_info": {

@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from pathlib import Path
-from typing import Dict, Any, List, Optional
+from typing import Dict, Any, List, Optional, Tuple
 import shutil
 
 
@@ -127,7 +127,7 @@ class ResultsManager:
         history: Dict[str, List[float]],
         final_metrics: Dict[str, Any],
         timestamp: Optional[str] = None
-    ) -> str:
+    ) -> Tuple[str, bool]:
         """Save experiment results with best model tracking.
 
         Args:
@@ -139,7 +139,7 @@ class ResultsManager:
             timestamp: Optional timestamp string, auto-generated if None.
 
         Returns:
-            Path to the saved result file.
+            Tuple of (path to saved result file, is_best flag).
         """
         if timestamp is None:
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")

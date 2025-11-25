@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "Computers",
-    "timestamp": "2025-11-25T10:48:36.048494",
-    "run_id": "20251125_104836"
+    "timestamp": "2025-11-25T15:53:58.107073",
+    "run_id": "20251125_155358"
   },
   "performance": {
     "test_accuracy": 0.808,
     "best_epoch": 21,
     "total_epochs": 71,
-    "training_time_seconds": 25.640533924102783,
+    "training_time_seconds": 28.81521511077881,
     "model_parameters": 274178
   },
   "dataset_info": {

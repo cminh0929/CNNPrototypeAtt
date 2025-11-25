@@ -61,5 +61,6 @@ Thumbs.db
 datasets/
 
 # Results - optional, uncomment if you don't want to push experiment results
-# results/
+results/
+
 

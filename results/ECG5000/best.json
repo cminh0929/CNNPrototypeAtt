@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "ECG5000",
-    "timestamp": "2025-11-25T11:40:14.474939",
-    "run_id": "20251125_114014"
+    "timestamp": "2025-11-25T14:56:34.129088",
+    "run_id": "20251125_145634"
   },
   "performance": {
-    "test_accuracy": 0.9435555555555556,
-    "best_epoch": 81,
-    "total_epochs": 131,
-    "training_time_seconds": 189.07812929153442,
+    "test_accuracy": 0.944,
+    "best_epoch": 23,
+    "total_epochs": 73,
+    "training_time_seconds": 273.8103642463684,
     "model_parameters": 276485
   },
   "dataset_info": {
@@ -49,20 +49,20 @@
   },
   "training_summary": {
     "loss": {
-      "min": 0.4074,
-      "final": 0.4181
+      "min": 0.4185,
+      "final": 0.4203
     },
     "train_accuracy": {
-      "best": 0.982,
+      "best": 0.978,
       "final": 0.974
     },
     "test_accuracy": {
-      "best": 0.9436,
-      "final": 0.9429
+      "best": 0.944,
+      "final": 0.9436
     },
     "generalization_gap": {
-      "at_best_epoch": 0.0384,
-      "final": 0.0311
+      "at_best_epoch": 0.034,
+      "final": 0.0304
     }
   }
 }

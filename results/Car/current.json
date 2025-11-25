@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "Car",
-    "timestamp": "2025-11-25T10:43:10.067852",
-    "run_id": "20251125_104310"
+    "timestamp": "2025-11-25T15:44:45.067598",
+    "run_id": "20251125_154445"
   },
   "performance": {
     "test_accuracy": 0.6833333333333333,
     "best_epoch": 42,
     "total_epochs": 92,
-    "training_time_seconds": 8.82243299484253,
+    "training_time_seconds": 15.937858819961548,
     "model_parameters": 275716
   },
   "dataset_info": {

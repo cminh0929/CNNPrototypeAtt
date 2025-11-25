@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "ElectricDevices",
-    "timestamp": "2025-11-25T12:01:30.217683",
-    "run_id": "20251125_120130"
+    "timestamp": "2025-11-25T17:26:19.735881",
+    "run_id": "20251125_172619"
   },
   "performance": {
-    "test_accuracy": 0.7478926209311373,
-    "best_epoch": 43,
-    "total_epochs": 93,
-    "training_time_seconds": 1230.2791771888733,
+    "test_accuracy": 0.7523019063675269,
+    "best_epoch": 62,
+    "total_epochs": 112,
+    "training_time_seconds": 1337.4236698150635,
     "model_parameters": 278023
   },
   "dataset_info": {
@@ -49,20 +49,20 @@
   },
   "training_summary": {
     "loss": {
-      "min": 0.6585,
-      "final": 0.659
+      "min": 0.6511,
+      "final": 0.6522
     },
     "train_accuracy": {
-      "best": 0.8959,
-      "final": 0.8959
+      "best": 0.9012,
+      "final": 0.8982
     },
     "test_accuracy": {
-      "best": 0.7479,
-      "final": 0.7299
+      "best": 0.7523,
+      "final": 0.7209
     },
     "generalization_gap": {
-      "at_best_epoch": 0.148,
-      "final": 0.1661
+      "at_best_epoch": 0.1489,
+      "final": 0.1772
     }
   }
 }

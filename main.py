@@ -65,11 +65,13 @@ def run_single_dataset(
         # --- ADAPTIVE BATCH SIZE (Important for small datasets) ---
         num_train_samples = len(data_manager.X_train)
         original_batch_size = config['batch_size']
-        adaptive_batch_size = min(original_batch_size, max(4, num_train_samples // 4))
+        # Ensure minimum batch size of 8 for stable gradients
+        # Use 1/10 of samples instead of 1/4 to have more batches per epoch
+        adaptive_batch_size = max(8, min(original_batch_size, num_train_samples // 10))
         
         if adaptive_batch_size != original_batch_size:
             print(f"\n[Adaptive] Adjusting batch size: {original_batch_size} -> {adaptive_batch_size}")
-            print(f"           Reason: Small dataset ({num_train_samples} samples)")
+            print(f"           Reason: Optimizing for dataset size ({num_train_samples} samples)")
             # Recreate data manager with adaptive batch size
             data_manager = DataLoaderManager(
                 dataset_name=dataset_name,
@@ -84,10 +86,18 @@ def run_single_dataset(
         train_loader, test_loader = data_manager.get_loaders()
         info: Dict[str, int] = data_manager.get_info()
 
-        # Determine number of prototypes
+        # Determine number of prototypes with dynamic heuristic
         num_prototypes: Optional[int] = config['num_prototypes']
         if num_prototypes is None:
-            num_prototypes = info['num_classes'] * 2
+            # Dynamic heuristic based on dataset complexity
+            num_classes = info['num_classes']
+            if num_classes <= 20:
+                multiplier = 2  # Small/medium datasets -> Keep lightweight
+            else:
+                multiplier = 5  # Large/complex datasets -> Increase representation capacity
+            
+            num_prototypes = num_classes * multiplier
+            print(f"\n[Auto-Config] Dynamic Prototypes: {num_prototypes} (Multiplier: {multiplier}x | Classes: {num_classes})")
 
         # Create model
         model: CNNProtoAttentionModel = CNNProtoAttentionModel(
@@ -116,14 +126,14 @@ def run_single_dataset(
         )
         if hasattr(model, 'initialize_prototypes'):
             print("\n[K-Means Init] Initializing prototypes based on training data...")
-            # Gọi hàm khởi tạo đã thêm vào Model ở bước trước
+            # Call the prototype initialization method
             model.initialize_prototypes(train_loader, device=device)
         else:
             print("\n[WARNING] 'initialize_prototypes' method not found in model.")
             print("Model will use RANDOM initialization (Results may be poor).")
         # Train model
         start_time = time.time()
-        history: Dict[str, list] = trainer.train(
+        history, best_epoch = trainer.train(
             train_loader,
             test_loader,
             epochs=config['epochs'],
@@ -185,7 +195,7 @@ def run_single_dataset(
             "training_history": history,
             "final_metrics": {
                 "test_accuracy": final_acc,
-                "best_epoch": len(history['loss']) - config['early_stopping_patience'] if len(history['loss']) > config['early_stopping_patience'] else len(history['loss']),
+                "best_epoch": best_epoch,
                 "total_epochs": len(history['loss']),
                 "training_time": training_time,
                 "total_parameters": total_params

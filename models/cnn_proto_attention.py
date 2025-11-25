@@ -65,25 +65,45 @@ class CNNProtoAttentionModel(nn.Module):
         self.eval()
         all_features = []
         
-        # 1. Extract features from entire training set
-        with torch.no_grad():
-            for x, _ in data_loader:
-                x = x.to(device)
-                features = self.cnn(x)
-                
-                # If using projection, project features first
-                if self.prototype.use_projection:
-                    features = self.prototype.projection(features)
-                
-                all_features.append(features.cpu())
-        
-        all_features = torch.cat(all_features, dim=0).numpy()
-        
-        # 2. Run K-Means to find cluster centers
-        kmeans = KMeans(n_clusters=self.prototype.prototypes.shape[0], n_init=10)
-        kmeans.fit(all_features)
-        
-        # 3. Assign cluster centers to model prototypes
-        cluster_centers = torch.tensor(kmeans.cluster_centers_, dtype=torch.float32).to(device)
-        self.prototype.prototypes.data = torch.nn.functional.normalize(cluster_centers, dim=1)
-        print("Prototypes initialized!")
+        try:
+            # 1. Extract features from entire training set
+            with torch.no_grad():
+                for x, _ in data_loader:
+                    x = x.to(device)
+                    features = self.cnn(x)
+                    
+                    # If using projection, project features first
+                    if self.prototype.use_projection:
+                        features = self.prototype.projection(features)
+                    
+                    all_features.append(features.cpu())
+            
+            all_features = torch.cat(all_features, dim=0).numpy()
+            n_samples = all_features.shape[0]
+            n_prototypes = self.prototype.prototypes.shape[0]
+            
+            # Check if we have enough samples for K-Means
+            if n_samples < n_prototypes:
+                raise ValueError(
+                    f"Insufficient samples for K-Means: {n_samples} samples < {n_prototypes} prototypes"
+                )
+            
+            # 2. Run K-Means to find cluster centers
+            kmeans = KMeans(n_clusters=n_prototypes, n_init=10, random_state=42)
+            kmeans.fit(all_features)
+            
+            # 3. Assign cluster centers to model prototypes
+            cluster_centers = torch.tensor(kmeans.cluster_centers_, dtype=torch.float32).to(device)
+            self.prototype.prototypes.data = torch.nn.functional.normalize(cluster_centers, dim=1)
+            print("Prototypes initialized successfully with K-Means!")
+            
+        except Exception as e:
+            print(f"\n[WARNING] K-Means initialization failed: {e}")
+            print("Falling back to random initialization...")
+            # Keep existing random prototypes (already initialized in __init__)
+            # Re-normalize to be safe
+            with torch.no_grad():
+                self.prototype.prototypes.data = torch.nn.functional.normalize(
+                    self.prototype.prototypes.data, dim=1
+                )
+            print("Prototypes initialized with random values.")

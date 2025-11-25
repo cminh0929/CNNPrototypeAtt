@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "Rock",
-    "timestamp": "2025-11-25T10:13:21.428631",
-    "run_id": "20251125_101321"
+    "timestamp": "2025-11-25T18:47:22.092014",
+    "run_id": "20251125_184722"
   },
   "performance": {
-    "test_accuracy": 0.54,
-    "best_epoch": 35,
-    "total_epochs": 85,
-    "training_time_seconds": 4.577824831008911,
+    "test_accuracy": 0.56,
+    "best_epoch": 40,
+    "total_epochs": 90,
+    "training_time_seconds": 5.107529640197754,
     "model_parameters": 275716
   },
   "dataset_info": {
@@ -41,25 +41,28 @@
     },
     "use_projection": true,
     "projection_dim": null,
-    "clustering_weight": 0.0,
-    "clustering_config": null
+    "clustering_weight": 0.1,
+    "clustering_config": {
+      "compactness_weight": 1.0,
+      "separation_weight": 0.5
+    }
   },
   "training_summary": {
     "loss": {
-      "min": 0.9366,
-      "final": 1.0204
+      "min": 0.8617,
+      "final": 0.8899
     },
     "train_accuracy": {
-      "best": 0.85,
-      "final": 0.6
+      "best": 0.8,
+      "final": 0.75
     },
     "test_accuracy": {
-      "best": 0.54,
-      "final": 0.5
+      "best": 0.56,
+      "final": 0.54
     },
     "generalization_gap": {
-      "at_best_epoch": 0.31,
-      "final": 0.1
+      "at_best_epoch": 0.24,
+      "final": 0.21
     }
   }
 }
