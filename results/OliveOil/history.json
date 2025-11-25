@@ -1,0 +1,42 @@
+[
+  {
+    "timestamp": "2025-11-25T00:12:42.121381",
+    "run_id": "20251125_001242",
+    "accuracy": 0.4,
+    "epochs": 22,
+    "training_time": 0.4310951232910156,
+    "is_best": true
+  },
+  {
+    "timestamp": "2025-11-25T00:23:56.216186",
+    "run_id": "20251125_002356",
+    "accuracy": 0.4,
+    "epochs": 51,
+    "training_time": 3.285292625427246,
+    "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T09:37:55.916369",
+    "run_id": "20251125_093755",
+    "accuracy": 0.4,
+    "epochs": 51,
+    "training_time": 2.0827443599700928,
+    "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T09:59:51.813969",
+    "run_id": "20251125_095951",
+    "accuracy": 0.4,
+    "epochs": 51,
+    "training_time": 2.28127384185791,
+    "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T10:13:03.781763",
+    "run_id": "20251125_101303",
+    "accuracy": 0.4,
+    "epochs": 51,
+    "training_time": 3.0364630222320557,
+    "is_best": false
+  }
+]

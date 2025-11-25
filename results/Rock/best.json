@@ -1,0 +1,49 @@
+{
+  "run_info": {
+    "dataset": "Rock",
+    "timestamp": "2025-11-25T00:24:10.230195",
+    "run_id": "20251125_002410"
+  },
+  "performance": {
+    "test_accuracy": 0.68,
+    "best_epoch": 54,
+    "total_epochs": 104,
+    "training_time_seconds": 6.272064924240112,
+    "model_parameters": 146180
+  },
+  "dataset_info": {
+    "type": "UNIVARIATE",
+    "channels": 1,
+    "classes": 4,
+    "time_steps": 2844,
+    "train_samples": 20,
+    "test_samples": 50
+  },
+  "hyperparameters": {
+    "num_prototypes": 16,
+    "dropout": 0.0,
+    "temperature": 0.3,
+    "batch_size": 4,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "diversity_weight": 0.01
+  },
+  "training_summary": {
+    "loss": {
+      "min": 0.6555,
+      "final": 0.677
+    },
+    "train_accuracy": {
+      "best": 0.9,
+      "final": 0.85
+    },
+    "test_accuracy": {
+      "best": 0.68,
+      "final": 0.68
+    },
+    "generalization_gap": {
+      "at_best_epoch": 0.22,
+      "final": 0.17
+    }
+  }
+}

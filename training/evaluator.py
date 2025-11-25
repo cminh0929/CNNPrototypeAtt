@@ -32,13 +32,12 @@ def evaluate(model: nn.Module, dataloader: DataLoader, device: torch.device, ver
     acc = accuracy_score(labels, preds)
 
     if verbose:
-        print(f"\n{'='*70}")
-        print("EVALUATION RESULTS")
-        print('='*70)
+        print("\nEvaluation Results")
+        print("-" * 70)
         print(f"Accuracy: {acc:.4f} ({acc*100:.2f}%)")
         print(f"F1-Score: {f1_score(labels, preds, average='weighted'):.4f}")
         print("\nClassification Report:")
         print(classification_report(labels, preds))
-        print(f"{'='*70}\n")
+        print("-" * 70)
 
     return acc

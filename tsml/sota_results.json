@@ -1,0 +1,282 @@
+{
+    "Adiac": {
+        "HC2": 0.8542,
+        "MultiROCKET": 0.8465,
+        "InceptionTime": 0.8363,
+        "ResNet": 0.8082,
+        "1-NN-DTW": 0.6036,
+        "TS-CHIEF": 0.8517
+    },
+    "ArrowHead": {
+        "HC2": 0.88,
+        "MultiROCKET": 0.8686,
+        "InceptionTime": 0.8286,
+        "ResNet": 0.8229,
+        "1-NN-DTW": 0.7029,
+        "TS-CHIEF": 0.8514
+    },
+    "Beef": {
+        "HC2": 0.9,
+        "MultiROCKET": 0.8,
+        "InceptionTime": 0.7667,
+        "ResNet": 0.7,
+        "1-NN-DTW": 0.6333,
+        "TS-CHIEF": 0.8
+    },
+    "BeetleFly": {
+        "HC2": 0.95,
+        "MultiROCKET": 0.9,
+        "InceptionTime": 0.9,
+        "ResNet": 0.85,
+        "1-NN-DTW": 0.75,
+        "TS-CHIEF": 0.95
+    },
+    "BirdChicken": {
+        "HC2": 0.95,
+        "MultiROCKET": 0.95,
+        "InceptionTime": 0.95,
+        "ResNet": 0.95,
+        "1-NN-DTW": 0.75,
+        "TS-CHIEF": 0.95
+    },
+    "Car": {
+        "HC2": 0.9167,
+        "MultiROCKET": 0.9,
+        "InceptionTime": 0.8833,
+        "ResNet": 0.85,
+        "1-NN-DTW": 0.7333,
+        "TS-CHIEF": 0.9167
+    },
+    "CBF": {
+        "HC2": 0.9989,
+        "MultiROCKET": 0.9967,
+        "InceptionTime": 0.9978,
+        "ResNet": 0.9956,
+        "1-NN-DTW": 0.9967,
+        "TS-CHIEF": 0.9978
+    },
+    "Chinatown": {
+        "HC2": 0.9825,
+        "MultiROCKET": 0.9825,
+        "InceptionTime": 0.9825,
+        "ResNet": 0.9796,
+        "1-NN-DTW": 0.9534,
+        "TS-CHIEF": 0.9767
+    },
+    "ChlorineConcentration": {
+        "HC2": 0.8826,
+        "MultiROCKET": 0.8465,
+        "InceptionTime": 0.8656,
+        "ResNet": 0.84,
+        "1-NN-DTW": 0.6484,
+        "TS-CHIEF": 0.7802
+    },
+    "Coffee": {
+        "HC2": 1.0,
+        "MultiROCKET": 1.0,
+        "InceptionTime": 0.9643,
+        "ResNet": 0.9643,
+        "1-NN-DTW": 1.0,
+        "TS-CHIEF": 1.0
+    },
+    "DiatomSizeReduction": {
+        "HC2": 0.9771,
+        "MultiROCKET": 0.9641,
+        "InceptionTime": 0.951,
+        "ResNet": 0.92,
+        "1-NN-DTW": 0.9673,
+        "TS-CHIEF": 0.951
+    },
+    "ECG200": {
+        "HC2": 0.89,
+        "MultiROCKET": 0.86,
+        "InceptionTime": 0.87,
+        "ResNet": 0.86,
+        "1-NN-DTW": 0.88,
+        "TS-CHIEF": 0.89
+    },
+    "ECG5000": {
+        "HC2": 0.9473,
+        "MultiROCKET": 0.9456,
+        "InceptionTime": 0.9413,
+        "ResNet": 0.937,
+        "1-NN-DTW": 0.924,
+        "TS-CHIEF": 0.9431
+    },
+    "FaceAll": {
+        "HC2": 0.9621,
+        "MultiROCKET": 0.8521,
+        "InceptionTime": 0.8142,
+        "ResNet": 0.78,
+        "1-NN-DTW": 0.7136,
+        "TS-CHIEF": 0.9509
+    },
+    "FordA": {
+        "HC2": 0.9682,
+        "MultiROCKET": 0.9492,
+        "InceptionTime": 0.9614,
+        "ResNet": 0.925,
+        "1-NN-DTW": 0.6591,
+        "TS-CHIEF": 0.9455
+    },
+    "FordB": {
+        "HC2": 0.842,
+        "MultiROCKET": 0.8247,
+        "InceptionTime": 0.8259,
+        "ResNet": 0.78,
+        "1-NN-DTW": 0.6074,
+        "TS-CHIEF": 0.8173
+    },
+    "GunPoint": {
+        "HC2": 1.0,
+        "MultiROCKET": 1.0,
+        "InceptionTime": 0.9867,
+        "ResNet": 0.9867,
+        "1-NN-DTW": 0.9133,
+        "TS-CHIEF": 1.0
+    },
+    "Ham": {
+        "HC2": 0.8286,
+        "MultiROCKET": 0.7619,
+        "InceptionTime": 0.7333,
+        "ResNet": 0.69,
+        "1-NN-DTW": 0.4667,
+        "TS-CHIEF": 0.7905
+    },
+    "Herring": {
+        "HC2": 0.7031,
+        "MultiROCKET": 0.6406,
+        "InceptionTime": 0.6563,
+        "ResNet": 0.625,
+        "1-NN-DTW": 0.5313,
+        "TS-CHIEF": 0.6719
+    },
+    "InsectWingbeatSound": {
+        "HC2": 0.6727,
+        "MultiROCKET": 0.6455,
+        "InceptionTime": 0.6515,
+        "ResNet": 0.61,
+        "1-NN-DTW": 0.3551,
+        "TS-CHIEF": 0.6389
+    },
+    "ItalyPowerDemand": {
+        "HC2": 0.968,
+        "MultiROCKET": 0.9611,
+        "InceptionTime": 0.964,
+        "ResNet": 0.96,
+        "1-NN-DTW": 0.9504,
+        "TS-CHIEF": 0.9611
+    },
+    "Lightning7": {
+        "HC2": 0.8767,
+        "MultiROCKET": 0.8082,
+        "InceptionTime": 0.8356,
+        "ResNet": 0.75,
+        "1-NN-DTW": 0.726,
+        "TS-CHIEF": 0.8356
+    },
+    "Meat": {
+        "HC2": 0.9833,
+        "MultiROCKET": 0.9333,
+        "InceptionTime": 0.95,
+        "ResNet": 0.9333,
+        "1-NN-DTW": 0.9333,
+        "TS-CHIEF": 0.9667
+    },
+    "MoteStrain": {
+        "HC2": 0.9345,
+        "MultiROCKET": 0.9177,
+        "InceptionTime": 0.9225,
+        "ResNet": 0.87,
+        "1-NN-DTW": 0.8347,
+        "TS-CHIEF": 0.9065
+    },
+    "OliveOil": {
+        "HC2": 0.9333,
+        "MultiROCKET": 0.9,
+        "InceptionTime": 0.8667,
+        "ResNet": 0.8333,
+        "1-NN-DTW": 0.8333,
+        "TS-CHIEF": 0.9
+    },
+    "Plane": {
+        "HC2": 1.0,
+        "MultiROCKET": 1.0,
+        "InceptionTime": 1.0,
+        "ResNet": 1.0,
+        "1-NN-DTW": 1.0,
+        "TS-CHIEF": 1.0
+    },
+    "Rock": {
+        "HC2": 0.76,
+        "MultiROCKET": 0.74,
+        "InceptionTime": 0.72,
+        "ResNet": 0.7,
+        "1-NN-DTW": 0.62,
+        "TS-CHIEF": 0.76
+    },
+    "ShapesAll": {
+        "HC2": 0.9317,
+        "MultiROCKET": 0.92,
+        "InceptionTime": 0.9067,
+        "ResNet": 0.88,
+        "1-NN-DTW": 0.7517,
+        "TS-CHIEF": 0.9267
+    },
+    "SwedishLeaf": {
+        "HC2": 0.9728,
+        "MultiROCKET": 0.96,
+        "InceptionTime": 0.9648,
+        "ResNet": 0.93,
+        "1-NN-DTW": 0.792,
+        "TS-CHIEF": 0.9584
+    },
+    "SyntheticControl": {
+        "HC2": 1.0,
+        "MultiROCKET": 0.9967,
+        "InceptionTime": 0.9967,
+        "ResNet": 0.9933,
+        "1-NN-DTW": 0.88,
+        "TS-CHIEF": 1.0
+    },
+    "Trace": {
+        "HC2": 1.0,
+        "MultiROCKET": 1.0,
+        "InceptionTime": 1.0,
+        "ResNet": 0.99,
+        "1-NN-DTW": 1.0,
+        "TS-CHIEF": 1.0
+    },
+    "TwoLeadECG": {
+        "HC2": 0.9982,
+        "MultiROCKET": 0.9947,
+        "InceptionTime": 0.9947,
+        "ResNet": 0.98,
+        "1-NN-DTW": 0.9052,
+        "TS-CHIEF": 0.9921
+    },
+    "Wafer": {
+        "HC2": 0.9995,
+        "MultiROCKET": 0.9989,
+        "InceptionTime": 0.9984,
+        "ResNet": 0.997,
+        "1-NN-DTW": 0.9955,
+        "TS-CHIEF": 0.9991
+    },
+    "Wine": {
+        "HC2": 0.9259,
+        "MultiROCKET": 0.8148,
+        "InceptionTime": 0.8148,
+        "ResNet": 0.75,
+        "1-NN-DTW": 0.5741,
+        "TS-CHIEF": 0.8704
+    },
+    "Yoga": {
+        "HC2": 0.9163,
+        "MultiROCKET": 0.9063,
+        "InceptionTime": 0.887,
+        "ResNet": 0.84,
+        "1-NN-DTW": 0.8373,
+        "TS-CHIEF": 0.8993
+    }
+}

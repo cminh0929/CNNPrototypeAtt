@@ -1,0 +1,42 @@
+[
+  {
+    "timestamp": "2025-11-25T00:12:30.383786",
+    "run_id": "20251125_001230",
+    "accuracy": 1.0,
+    "epochs": 73,
+    "training_time": 2.4947075843811035,
+    "is_best": true
+  },
+  {
+    "timestamp": "2025-11-25T00:23:30.382674",
+    "run_id": "20251125_002330",
+    "accuracy": 1.0,
+    "epochs": 73,
+    "training_time": 1.796595573425293,
+    "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T09:37:33.219091",
+    "run_id": "20251125_093733",
+    "accuracy": 1.0,
+    "epochs": 79,
+    "training_time": 6.75426173210144,
+    "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T09:59:27.948738",
+    "run_id": "20251125_095927",
+    "accuracy": 1.0,
+    "epochs": 91,
+    "training_time": 8.235618829727173,
+    "is_best": false
+  },
+  {
+    "timestamp": "2025-11-25T10:12:37.170869",
+    "run_id": "20251125_101237",
+    "accuracy": 1.0,
+    "epochs": 91,
+    "training_time": 8.488144874572754,
+    "is_best": false
+  }
+]

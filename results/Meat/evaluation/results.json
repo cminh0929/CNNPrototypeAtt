@@ -1,0 +1,27 @@
+{
+  "dataset": "Meat",
+  "classifier": "CNNProto",
+  "accuracy": 0.5833333333333334,
+  "num_samples": 60,
+  "config": {
+    "num_prototypes": null,
+    "dropout": 0.1,
+    "temperature": 0.5,
+    "batch_size": 8,
+    "epochs": 500,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "label_smoothing": 0.1,
+    "diversity_weight": 0.01,
+    "grad_clip": 1.0,
+    "early_stopping_patience": 50,
+    "lr_scheduler": "plateau",
+    "lr_patience": 20,
+    "lr_factor": 0.5,
+    "save_checkpoint": false,
+    "plot_training": false,
+    "plot_pca": false,
+    "seed": 42,
+    "device": "auto"
+  }
+}

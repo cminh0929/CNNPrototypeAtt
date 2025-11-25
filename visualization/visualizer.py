@@ -57,7 +57,7 @@ class Visualizer:
             num_classes: Number of classes in the dataset.
             save_path: Path to save the visualization.
         """
-        print("\n🎨 Generating enhanced PCA visualization...")
+        print("\nGenerating PCA visualization...")
 
         self.model.eval()
 
@@ -122,7 +122,7 @@ class Visualizer:
         plt.tight_layout()
         plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
-        print(f"✓ Saved: {save_path}")
+        print(f"Saved: {save_path}")
 
     def plot_training_curves(self, history: Dict, save_path: str = 'training_curves.png') -> None:
         """Plot enhanced training history with multiple metrics.
@@ -131,7 +131,7 @@ class Visualizer:
             history: Dictionary containing training history.
             save_path: Path to save the visualization.
         """
-        print("\n📊 Generating enhanced training curves...")
+        print("\nGenerating training curves...")
         
         fig = plt.figure(figsize=(15, 5))
         gs = GridSpec(1, 3, figure=fig, wspace=0.3)
@@ -204,7 +204,7 @@ class Visualizer:
         plt.suptitle('Training Progress Analysis', fontsize=16, fontweight='bold', y=1.02)
         plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
-        print(f"✓ Saved: {save_path}")
+        print(f"Saved: {save_path}")
 
     def plot_confusion_matrix(self, dataloader: DataLoader, num_classes: int, 
                              save_path: str = 'confusion_matrix.png') -> None:
@@ -215,7 +215,7 @@ class Visualizer:
             num_classes: Number of classes in the dataset.
             save_path: Path to save the visualization.
         """
-        print("\n🎯 Generating confusion matrix...")
+        print("\nGenerating confusion matrix...")
         
         self.model.eval()
         all_preds: List[int] = []
@@ -274,7 +274,7 @@ class Visualizer:
         plt.tight_layout()
         plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
-        print(f"✓ Saved: {save_path}")
+        print(f"Saved: {save_path}")
 
     def plot_prototype_heatmap(self, save_path: str = 'prototype_heatmap.png') -> None:
         """Visualize prototype patterns as a heatmap.
@@ -282,7 +282,7 @@ class Visualizer:
         Args:
             save_path: Path to save the visualization.
         """
-        print("\n🔥 Generating prototype activation heatmap...")
+        print("\nGenerating prototype heatmap...")
         
         prototypes = self.model.prototype.prototypes.detach().cpu().numpy()
         num_prototypes = prototypes.shape[0]
@@ -300,7 +300,7 @@ class Visualizer:
         plt.tight_layout()
         plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
-        print(f"✓ Saved: {save_path}")
+        print(f"Saved: {save_path}")
 
     def plot_sample_predictions(self, dataloader: DataLoader, num_samples: int = 6,
                                save_path: str = 'sample_predictions.png') -> None:
@@ -311,7 +311,7 @@ class Visualizer:
             num_samples: Number of samples to visualize.
             save_path: Path to save the visualization.
         """
-        print(f"\n📈 Generating {num_samples} sample predictions...")
+        print(f"\nGenerating {num_samples} sample predictions...")
         
         self.model.eval()
         
@@ -355,7 +355,7 @@ class Visualizer:
             
             is_correct = true_label == pred_label
             color = 'green' if is_correct else 'red'
-            status = '✓' if is_correct else '✗'
+            status = 'OK' if is_correct else 'X'
             
             ax.set_title(f'{status} True: {true_label} | Pred: {pred_label} ({confidence:.2%})',
                         fontsize=11, fontweight='bold', color=color)
@@ -372,4 +372,4 @@ class Visualizer:
         plt.tight_layout()
         plt.savefig(save_path, dpi=300, bbox_inches='tight', facecolor='white')
         plt.close()
-        print(f"✓ Saved: {save_path}")
+        print(f"Saved: {save_path}")

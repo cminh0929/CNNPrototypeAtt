@@ -1,0 +1,65 @@
+{
+  "run_info": {
+    "dataset": "Ham",
+    "timestamp": "2025-11-25T10:12:49.967736",
+    "run_id": "20251125_101249"
+  },
+  "performance": {
+    "test_accuracy": 0.7428571428571429,
+    "best_epoch": 14,
+    "total_epochs": 64,
+    "training_time_seconds": 10.24858546257019,
+    "model_parameters": 274178
+  },
+  "dataset_info": {
+    "type": "UNIVARIATE",
+    "channels": 1,
+    "classes": 2,
+    "time_steps": 431,
+    "train_samples": 109,
+    "test_samples": 105
+  },
+  "hyperparameters": {
+    "num_prototypes": null,
+    "dropout": 0.1,
+    "temperature": 0.5,
+    "batch_size": 8,
+    "learning_rate": 0.0005,
+    "weight_decay": 0.0001,
+    "diversity_weight": 0.01,
+    "use_augmentation": true,
+    "augmentation_config": {
+      "jitter_std": 0.03,
+      "scaling_range": [
+        0.8,
+        1.2
+      ],
+      "time_warp_strength": 0.2,
+      "window_slice_ratio": 0.9,
+      "rotation_prob": 0.5,
+      "augment_prob": 0.5
+    },
+    "use_projection": true,
+    "projection_dim": null,
+    "clustering_weight": 0.0,
+    "clustering_config": null
+  },
+  "training_summary": {
+    "loss": {
+      "min": 0.2979,
+      "final": 0.4156
+    },
+    "train_accuracy": {
+      "best": 0.9633,
+      "final": 0.8807
+    },
+    "test_accuracy": {
+      "best": 0.7429,
+      "final": 0.6571
+    },
+    "generalization_gap": {
+      "at_best_epoch": 0.2204,
+      "final": 0.2236
+    }
+  }
+}

@@ -1,61 +1,42 @@
+
 default:
-  num_prototypes: null
+  num_prototypes: null             # Mặc định ổn định
   dropout: 0.1
-  temperature: 1.0
-  batch_size: 32
-  epochs: 100
-  learning_rate: 0.001
+  temperature: 0.5               # Giúp attention sắc nét (sharp) hơn
+  batch_size: 8
+  epochs: 500                    
+  learning_rate: 0.0005          
   weight_decay: 0.0001
-  label_smoothing: 0.0
+  label_smoothing: 0.1
   diversity_weight: 0.01
   grad_clip: 1.0
-  early_stopping_patience: 20
+  early_stopping_patience: 50
   lr_scheduler: plateau
-  lr_patience: 10
+  lr_patience: 20
   lr_factor: 0.5
-  save_checkpoint: true
-  checkpoint_dir: checkpoints
-  plot_training: true
-  plot_pca: true
+  save_checkpoint: false         
+  plot_training: false           
+  plot_pca: false
   seed: 42
   device: auto
 
-GunPoint:
-  num_prototypes: 6
-  dropout: 0.2
-  temperature: 0.5
-  batch_size: 16
-  epochs: 150
-  learning_rate: 0.0005
+  # Data Augmentation
+  use_augmentation: true
+  augmentation:
+    jitter_std: 0.03
+    scaling_range: [0.8, 1.2]
+    time_warp_strength: 0.2
+    window_slice_ratio: 0.9
+    rotation_prob: 0.5
+    augment_prob: 0.5
 
-ECG200:
-  num_prototypes: 6
-  dropout: 0.15
-  temperature: 0.8
-  batch_size: 32
-  epochs: 200
-  learning_rate: 0.001
+  # Projection Layer
+  use_projection: true
+  projection_dim: null  # null = same as feature_dim
 
-FordA:
-  num_prototypes: 6
-  dropout: 0.1
-  temperature: 1.0
-  batch_size: 64
-  epochs: 100
-  learning_rate: 0.001
+  # Clustering Loss
+  clustering_weight: 0.1
+  clustering_loss:
+    compactness_weight: 1.0
+    separation_weight: 0.5
 
-Wafer:
-  num_prototypes: 6
-  dropout: 0.1
-  temperature: 0.7
-  batch_size: 128
-  epochs: 80
-  learning_rate: 0.001
-
-Coffee:
-  num_prototypes: 6
-  dropout: 0.2
-  temperature: 0.5
-  batch_size: 8
-  epochs: 200
-  learning_rate: 0.0005

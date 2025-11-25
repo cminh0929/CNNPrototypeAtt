@@ -113,19 +113,34 @@ DatasetName:
   epochs: 150
 ```
 
-## Training
+## Usage
 
-To train the model on a specific dataset, modify the `dataset_name` parameter in `main.py`:
+### Command-Line Interface
 
-```python
-def main(dataset_name: str = "GunPoint") -> None:
-    ...
-```
-
-Then run:
 ```bash
+# List available datasets
+python main.py --list
+
+# Run on default dataset (GunPoint)
 python main.py
+
+# Run on specific dataset
+python main.py --dataset ECG200
+
+# Run on all available datasets
+python main.py --all
+
+# Run without saving results
+python main.py --dataset GunPoint --no-save
 ```
+
+**Options:**
+- `--dataset NAME`: Run on specific dataset (default: GunPoint)
+- `--all`: Run on all available datasets
+- `--list`: List available datasets
+- `--no-save`: Don't save results
+
+### Training Process
 
 The training process will:
 1. Load and preprocess the dataset
@@ -133,6 +148,20 @@ The training process will:
 3. Train with early stopping based on validation accuracy
 4. Evaluate on the test set
 5. Generate visualizations
+6. Save results to `results/{dataset_name}/` directory
+
+### Results Management
+
+Results are automatically saved in JSON format:
+```
+results/
+├── GunPoint/
+│   ├── GunPoint_20251124_163525.json
+│   └── latest.json
+└── summary_20251124_171500.json (when using --all)
+```
+
+Each result file contains configuration, training history, and final metrics. See `results/README.md` for details.
 
 ## Evaluation
 

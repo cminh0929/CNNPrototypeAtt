@@ -24,20 +24,20 @@ class ConfigManager:
             'num_prototypes': None,
             'dropout': 0.1,
             'temperature': 1.0,
-            'batch_size': 32,
-            'epochs': 100,
-            'learning_rate': 0.001,
+            'batch_size': 8,
+            'epochs': 200,
+            'learning_rate': 0.0005,
             'weight_decay': 0.0001,
             'label_smoothing': 0.0,
-            'diversity_weight': 0.01,
+            'diversity_weight': 0.05,
             'grad_clip': 1.0,
-            'early_stopping_patience': 20,
+            'early_stopping_patience': 100,
             'lr_scheduler': 'plateau',
             'lr_patience': 10,
             'lr_factor': 0.5,
             'save_checkpoint': True,
             'checkpoint_dir': 'checkpoints',
-            'plot_training': True,
+            'plot_training': True,  
             'plot_pca': True,
             'seed': 42,
             'device': 'auto'
@@ -62,7 +62,7 @@ class ConfigManager:
                 else:
                     return {'default': self._get_default_config()}
 
-            print(f" Loaded config from: {self.config_path}")
+            print(f"Loaded config from: {self.config_path}")
             return data
 
         except Exception as e:
@@ -87,7 +87,7 @@ class ConfigManager:
         if dataset_name in self.configs and dataset_name != 'default':
             config.update(self.configs[dataset_name])
             if verbose:
-                print(f" Using custom config for '{dataset_name}'")
+                print(f"Using custom config for '{dataset_name}'")
         else:
             if verbose:
                 print(f"Using default config for '{dataset_name}'")
@@ -103,9 +103,8 @@ class ConfigManager:
         """
         config = self.get_config(dataset_name, verbose=False)
 
-        print(f"\n{'='*70}")
-        print(f"CONFIGURATION: {dataset_name.upper()}")
-        print('='*70)
+        print("\nConfiguration: {}".format(dataset_name.upper()))
+        print("-" * 70)
 
         categories = {
             'Model': ['num_prototypes', 'dropout', 'temperature'],
@@ -116,9 +115,9 @@ class ConfigManager:
         }
 
         for category, keys in categories.items():
-            print(f"\n  [{category}]")
+            print(f"\n[{category}]")
             for key in keys:
                 if key in config:
-                    print(f"    {key:25} : {config[key]}")
+                    print(f"  {key:25} : {config[key]}")
 
-        print(f"\n{'='*70}")
+        print("-" * 70)

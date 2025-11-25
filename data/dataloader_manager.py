@@ -4,23 +4,35 @@ from numpy.typing import NDArray
 from torch.utils.data import DataLoader
 import os
 
-from data.dataset import TimeSeriesDataset
+from data.dataset import TimeSeriesDataset, AugmentedTimeSeriesDataset
+from data.augmentation import TimeSeriesAugmenter
 
 
 class DataLoaderManager:
     """Manages data loading and preprocessing for time series datasets."""
 
-    def __init__(self, dataset_name: str, batch_size: int = 32, datasets_dir: str = "datasets") -> None:
+    def __init__(
+        self,
+        dataset_name: str,
+        batch_size: int = 32,
+        datasets_dir: str = "datasets",
+        use_augmentation: bool = False,
+        augmentation_config: Optional[Dict[str, Any]] = None
+    ) -> None:
         """Initialize the DataLoaderManager.
 
         Args:
             dataset_name: Name of the UCR/UEA dataset to load.
             batch_size: Number of samples per batch.
             datasets_dir: Directory containing the local datasets.
+            use_augmentation: Whether to apply data augmentation to training data.
+            augmentation_config: Configuration dictionary for augmentation parameters.
         """
         self.dataset_name: str = dataset_name
         self.batch_size: int = batch_size
         self.datasets_dir: str = datasets_dir
+        self.use_augmentation: bool = use_augmentation
+        self.augmentation_config: Dict[str, Any] = augmentation_config or {}
 
         self.X_train: Optional[NDArray[np.float32]] = None
         self.y_train: Optional[NDArray[np.int_]] = None
@@ -53,9 +65,8 @@ class DataLoaderManager:
         Returns:
             Self for method chaining.
         """
-        print(f"\n{'='*70}")
-        print(f"DATA LOADING: {self.dataset_name}")
-        print('='*70)
+        print("\nData Loading: {}".format(self.dataset_name))
+        print("-" * 70)
 
         # Construct file paths
         dataset_path = os.path.join(self.datasets_dir, self.dataset_name)
@@ -82,36 +93,36 @@ class DataLoaderManager:
         if X_train.ndim == 2:
             # Univariate case: shape is (N, L)
             self.input_channels = 1
-            print(f" UNIVARIATE")
+            print(f"UNIVARIATE")
         elif X_train.ndim == 3:
             # Multivariate case: shape should be (N, C, L)
             if X_train.shape[2] <= X_train.shape[1]:
                 X_train = np.transpose(X_train, (0, 2, 1))
                 X_test = np.transpose(X_test, (0, 2, 1))
-                print(f"Transposed to: {X_train.shape} → (N, C, L)")
+                print(f"Transposed to: {X_train.shape} -> (N, C, L)")
 
             self.input_channels = X_train.shape[1]
             if self.input_channels > 1:
-                print(f" MULTIVARIATE DETECTED: {self.input_channels} channels")
+                print(f"MULTIVARIATE DETECTED: {self.input_channels} channels")
             else:
                 X_train = np.squeeze(X_train, axis=1)
                 X_test = np.squeeze(X_test, axis=1)
                 self.input_channels = 1
-                print(f" UNIVARIATE (squeezed)")
+                print(f"UNIVARIATE (squeezed)")
 
-        print(" Applying PER-CHANNEL Z-SCORE NORMALIZATION...", end="")
-        if self.input_channels > 1 and X_train.ndim == 3:
-            mean = X_train.mean(axis=(0, 2), keepdims=True)
-            std = X_train.std(axis=(0, 2), keepdims=True) + 1e-8
-            X_train = (X_train - mean) / std
-            X_test = (X_test - mean) / std
-            print(" Done (multivariate per-channel norm)")
-        else:
-            mean = X_train.mean()
-            std = X_train.std() + 1e-8
-            X_train = (X_train - mean) / std
-            X_test = (X_test - mean) / std
-            print(" Done (univariate global norm)")
+        print("Applying per-channel z-score normalization...", end="")
+        def instance_norm(X):
+            # X shape: (N, C, L) hoặc (N, L)
+            # Tính mean/std dọc theo trục thời gian (trục cuối cùng)
+            mean = X.mean(axis=-1, keepdims=True)
+            std = X.std(axis=-1, keepdims=True) + 1e-8 # Cộng epsilon để tránh chia cho 0
+            return (X - mean) / std
+
+        # Áp dụng
+        X_train = instance_norm(X_train)
+        X_test = instance_norm(X_test)
+        
+        print(" done (Instance Norm)")
 
         # Map labels to 0-indexed integers
         unique_labels = np.unique(np.concatenate([y_train, y_test]))
@@ -131,8 +142,22 @@ class DataLoaderManager:
         self.y_train = y_train
         self.y_test = y_test
 
+        # Create data loaders with optional augmentation
+        if self.use_augmentation:
+            print("Data augmentation: ENABLED")
+            augmenter = TimeSeriesAugmenter(**self.augmentation_config)
+            train_dataset = AugmentedTimeSeriesDataset(
+                self.X_train,
+                self.y_train,
+                augmenter,
+                is_multivariate=(self.input_channels > 1)
+            )
+        else:
+            print("Data augmentation: DISABLED")
+            train_dataset = TimeSeriesDataset(self.X_train, self.y_train)
+
         self.train_loader = DataLoader(
-            TimeSeriesDataset(self.X_train, self.y_train),
+            train_dataset,
             batch_size=self.batch_size,
             shuffle=True,
             drop_last=False
@@ -143,7 +168,7 @@ class DataLoaderManager:
             shuffle=False
         )
 
-        print('='*70)
+        print("-" * 70)
         return self
 
     def get_loaders(self) -> Tuple[DataLoader, DataLoader]:

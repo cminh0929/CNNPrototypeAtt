@@ -8,6 +8,8 @@ from typing import Dict, List, Tuple, Optional, Any
 import time
 import copy
 
+from training.clustering_loss import compute_clustering_loss
+
 
 class Trainer:
     """Handles model training with optimization and early stopping."""
@@ -19,7 +21,9 @@ class Trainer:
         lr: float = 0.001,
         weight_decay: float = 0.0001,
         diversity_weight: float = 0.01,
-        label_smoothing: float = 0.0
+        label_smoothing: float = 0.0,
+        clustering_weight: float = 0.0,
+        clustering_config: Optional[Dict[str, float]] = None
     ) -> None:
         """Initialize the Trainer.
 
@@ -30,10 +34,17 @@ class Trainer:
             weight_decay: Weight decay for regularization.
             diversity_weight: Weight for prototype diversity loss.
             label_smoothing: Label smoothing factor.
+            clustering_weight: Weight for clustering loss.
+            clustering_config: Configuration for clustering loss (compactness/separation weights).
         """
         self.model: nn.Module = model
         self.device: torch.device = device
         self.diversity_weight: float = diversity_weight
+        self.clustering_weight: float = clustering_weight
+        self.clustering_config: Dict[str, float] = clustering_config or {
+            'compactness_weight': 1.0,
+            'separation_weight': 0.5
+        }
 
         self.criterion: nn.CrossEntropyLoss = nn.CrossEntropyLoss(label_smoothing=label_smoothing)
         self.optimizer: Adam = torch.optim.Adam(
@@ -65,11 +76,24 @@ class Trainer:
         for X_batch, y_batch in train_loader:
             X_batch, y_batch = X_batch.to(self.device), y_batch.to(self.device)
 
-            logits, _, _ = self.model(X_batch)
+            logits, attn, features = self.model(X_batch)
             ce_loss = self.criterion(logits, y_batch)
 
+            # Diversity loss
             div_loss = self.model.prototype.get_diversity_loss()
-            loss = ce_loss + self.diversity_weight * div_loss
+            
+            # Clustering loss
+            if self.clustering_weight > 0:
+                clustering_loss, _, _ = compute_clustering_loss(
+                    features,
+                    self.model.prototype.prototypes,
+                    attn,
+                    compactness_weight=self.clustering_config['compactness_weight'],
+                    separation_weight=self.clustering_config['separation_weight']
+                )
+                loss = ce_loss + self.diversity_weight * div_loss + self.clustering_weight * clustering_loss
+            else:
+                loss = ce_loss + self.diversity_weight * div_loss
 
             self.optimizer.zero_grad()
             loss.backward()
@@ -103,9 +127,8 @@ class Trainer:
         Returns:
             Dictionary containing training history.
         """
-        print(f"\n{'='*70}")
-        print("TRAINING")
-        print('='*70)
+        print("\nTraining")
+        print("-" * 70)
 
         history: Dict[str, List[float]] = {
             'loss': [],
@@ -149,7 +172,7 @@ class Trainer:
         train_time = time.time() - start_time
         print(f"\nTraining completed in {train_time:.2f}s")
         print(f"Best test accuracy: {best_test_acc:.4f}")
-        print('='*70)
+        print("-" * 70)
 
         return history
 
@@ -175,3 +198,11 @@ class Trainer:
                 labels.extend(y_batch.cpu().numpy())
 
         return accuracy_score(labels, preds)
+    
+    def initialize_prototypes(self, train_loader: DataLoader):
+        """Wrapper to call model's prototype initialization."""
+        if hasattr(self.model, 'initialize_prototypes'):
+            print("\n[Trainer] Initializing prototypes via K-Means...")
+            self.model.initialize_prototypes(train_loader, device=self.device)
+        else:
+            print("\n[Warning] Model does not support K-Means initialization.")

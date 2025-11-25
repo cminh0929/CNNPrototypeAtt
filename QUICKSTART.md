@@ -34,15 +34,34 @@ datasets/
 
 ## Run Training
 
-1. Open `main.py` and set the dataset name:
-```python
-def main(dataset_name: str = "GunPoint") -> None:
+### List Available Datasets
+
+```bash
+python main.py --list
 ```
 
-2. Run the training script:
+### Run on Single Dataset
+
 ```bash
+# Run on default dataset (GunPoint)
 python main.py
+
+# Run on specific dataset
+python main.py --dataset ECG200
 ```
+
+### Run on All Datasets
+
+```bash
+python main.py --all
+```
+
+## Command-Line Options
+
+- `--dataset NAME`: Run experiment on specific dataset (default: GunPoint)
+- `--all`: Run experiments on all available datasets
+- `--list`: List all available datasets and exit
+- `--no-save`: Don't save results to disk
 
 ## Expected Output
 
@@ -51,6 +70,24 @@ The script will:
 2. Train the model with early stopping
 3. Evaluate on the test set
 4. Generate visualizations in the current directory
+5. Save results to `results/{dataset_name}/` directory
+
+## Results
+
+Results are automatically saved in JSON format:
+```
+results/
+├── GunPoint/
+│   ├── GunPoint_20251124_163525.json
+│   └── latest.json
+└── summary_20251124_171500.json (when using --all)
+```
+
+Each result file contains:
+- Configuration used
+- Training history (loss, accuracy per epoch)
+- Final metrics (accuracy, training time, etc.)
+- Dataset information
 
 ## Configuration
 

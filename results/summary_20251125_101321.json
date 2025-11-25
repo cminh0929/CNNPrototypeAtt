@@ -1,0 +1,96 @@
+{
+  "timestamp": "2025-11-25T10:13:21.430649",
+  "total_datasets": 12,
+  "datasets": {
+    "Adiac": {
+      "test_accuracy": 0.6163682864450127,
+      "training_time": 94.88487005233765,
+      "total_epochs": 183,
+      "num_classes": 37,
+      "input_channels": 1
+    },
+    "Car": {
+      "test_accuracy": 0.7333333333333333,
+      "training_time": 7.0846850872039795,
+      "total_epochs": 85,
+      "num_classes": 4,
+      "input_channels": 1
+    },
+    "Chinatown": {
+      "test_accuracy": 0.9825072886297376,
+      "training_time": 8.717410326004028,
+      "total_epochs": 63,
+      "num_classes": 2,
+      "input_channels": 1
+    },
+    "Coffee": {
+      "test_accuracy": 1.0,
+      "training_time": 3.540210008621216,
+      "total_epochs": 78,
+      "num_classes": 2,
+      "input_channels": 1
+    },
+    "FaceAll": {
+      "test_accuracy": 0.9254437869822485,
+      "training_time": 65.95656514167786,
+      "total_epochs": 74,
+      "num_classes": 14,
+      "input_channels": 1
+    },
+    "FordA": {
+      "test_accuracy": 0.9416666666666667,
+      "training_time": 430.611768245697,
+      "total_epochs": 105,
+      "num_classes": 2,
+      "input_channels": 1
+    },
+    "GunPoint": {
+      "test_accuracy": 1.0,
+      "training_time": 8.488144874572754,
+      "total_epochs": 91,
+      "num_classes": 2,
+      "input_channels": 1
+    },
+    "Ham": {
+      "test_accuracy": 0.7428571428571429,
+      "training_time": 10.24858546257019,
+      "total_epochs": 64,
+      "num_classes": 2,
+      "input_channels": 1
+    },
+    "Meat": {
+      "test_accuracy": 0.6,
+      "training_time": 5.6462883949279785,
+      "total_epochs": 71,
+      "num_classes": 3,
+      "input_channels": 1
+    },
+    "OliveOil": {
+      "test_accuracy": 0.4,
+      "training_time": 3.0364630222320557,
+      "total_epochs": 51,
+      "num_classes": 4,
+      "input_channels": 1
+    },
+    "Plane": {
+      "test_accuracy": 1.0,
+      "training_time": 8.212369918823242,
+      "total_epochs": 58,
+      "num_classes": 7,
+      "input_channels": 1
+    },
+    "Rock": {
+      "test_accuracy": 0.54,
+      "training_time": 4.577824831008911,
+      "total_epochs": 85,
+      "num_classes": 4,
+      "input_channels": 1
+    }
+  },
+  "aggregate": {
+    "mean_accuracy": 0.7901813754095116,
+    "max_accuracy": 1.0,
+    "min_accuracy": 0.4,
+    "total_training_time": 651.0051853656769
+  }
+}
