@@ -60,7 +60,8 @@ Thumbs.db
 # Data - datasets are large and should not be pushed to Git
 datasets/
 
-# Results - optional, uncomment if you don't want to push experiment results
-results/
+# Results - keep only README, ignore everything else
+results/*
+!results/README.md
 
 
