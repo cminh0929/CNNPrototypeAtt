@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "GunPoint",
-    "timestamp": "2025-11-25T22:59:33.350024",
-    "run_id": "20251125_225933"
+    "timestamp": "2025-11-26T08:21:23.019136",
+    "run_id": "20251126_082123"
   },
   "performance": {
     "test_accuracy": 1.0,
-    "best_epoch": 41,
-    "total_epochs": 91,
-    "training_time_seconds": 8.54105257987976,
+    "best_epoch": 45,
+    "total_epochs": 95,
+    "training_time_seconds": 9.663595914840698,
     "model_parameters": 274178
   },
   "dataset_info": {
@@ -49,8 +49,8 @@
   },
   "training_summary": {
     "loss": {
-      "min": 0.1855,
-      "final": 0.1856
+      "min": 0.1795,
+      "final": 0.2009
     },
     "train_accuracy": {
       "best": 1.0,
@@ -58,11 +58,11 @@
     },
     "test_accuracy": {
       "best": 1.0,
-      "final": 0.9933
+      "final": 0.9867
     },
     "generalization_gap": {
       "at_best_epoch": 0.0,
-      "final": 0.0067
+      "final": 0.0133
     }
   }
 }

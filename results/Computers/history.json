@@ -1,18 +1,18 @@
 [
   {
-    "timestamp": "2025-11-25T10:48:36.050044",
-    "run_id": "20251125_104836",
-    "accuracy": 0.808,
-    "epochs": 71,
-    "training_time": 25.640533924102783,
+    "timestamp": "2025-11-26T02:29:35.918857",
+    "run_id": "20251126_022935",
+    "accuracy": 0.812,
+    "epochs": 114,
+    "training_time": 43.439149618148804,
     "is_best": true
   },
   {
-    "timestamp": "2025-11-25T15:53:58.109121",
-    "run_id": "20251125_155358",
-    "accuracy": 0.808,
-    "epochs": 71,
-    "training_time": 28.81521511077881,
-    "is_best": false
+    "timestamp": "2025-11-26T06:28:59.808080",
+    "run_id": "20251126_062859",
+    "accuracy": 0.824,
+    "epochs": 147,
+    "training_time": 54.55371403694153,
+    "is_best": true
   }
 ]

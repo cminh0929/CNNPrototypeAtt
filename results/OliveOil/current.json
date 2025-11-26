@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "OliveOil",
-    "timestamp": "2025-11-25T18:36:17.767147",
-    "run_id": "20251125_183617"
+    "timestamp": "2025-11-26T09:02:15.040554",
+    "run_id": "20251126_090215"
   },
   "performance": {
     "test_accuracy": 0.4,
     "best_epoch": 1,
     "total_epochs": 51,
-    "training_time_seconds": 3.0237903594970703,
+    "training_time_seconds": 2.7281136512756348,
     "model_parameters": 275716
   },
   "dataset_info": {
@@ -49,8 +49,8 @@
   },
   "training_summary": {
     "loss": {
-      "min": 1.2297,
-      "final": 1.3263
+      "min": 1.2698,
+      "final": 1.2962
     },
     "train_accuracy": {
       "best": 0.4333,

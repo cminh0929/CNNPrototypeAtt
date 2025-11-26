@@ -1,15 +1,15 @@
 {
   "run_info": {
     "dataset": "Plane",
-    "timestamp": "2025-11-25T00:12:46.124084",
-    "run_id": "20251125_001246"
+    "timestamp": "2025-11-26T05:14:06.763012",
+    "run_id": "20251126_051406"
   },
   "performance": {
     "test_accuracy": 1.0,
-    "best_epoch": 15,
-    "total_epochs": 35,
-    "training_time_seconds": 1.3502020835876465,
-    "model_parameters": 146951
+    "best_epoch": 8,
+    "total_epochs": 58,
+    "training_time_seconds": 10.23037338256836,
+    "model_parameters": 278023
   },
   "dataset_info": {
     "type": "UNIVARIATE",
@@ -20,22 +20,41 @@
     "test_samples": 105
   },
   "hyperparameters": {
-    "num_prototypes": 16,
-    "dropout": 0.0,
-    "temperature": 0.3,
-    "batch_size": 32,
+    "num_prototypes": null,
+    "dropout": 0.1,
+    "temperature": 0.5,
+    "batch_size": 8,
     "learning_rate": 0.0005,
     "weight_decay": 0.0001,
-    "diversity_weight": 0.01
+    "diversity_weight": 0.01,
+    "use_augmentation": true,
+    "augmentation_config": {
+      "jitter_std": 0.03,
+      "scaling_range": [
+        0.8,
+        1.2
+      ],
+      "time_warp_strength": 0.2,
+      "window_slice_ratio": 0.9,
+      "rotation_prob": 0.5,
+      "augment_prob": 0.5
+    },
+    "use_projection": true,
+    "projection_dim": null,
+    "clustering_weight": 0.1,
+    "clustering_config": {
+      "compactness_weight": 1.0,
+      "separation_weight": 0.5
+    }
   },
   "training_summary": {
     "loss": {
-      "min": 0.0661,
-      "final": 0.0769
+      "min": 0.5229,
+      "final": 0.5686
     },
     "train_accuracy": {
       "best": 1.0,
-      "final": 1.0
+      "final": 0.9905
     },
     "test_accuracy": {
       "best": 1.0,
@@ -43,7 +62,7 @@
     },
     "generalization_gap": {
       "at_best_epoch": 0.0,
-      "final": 0.0
+      "final": -0.0095
     }
   }
 }

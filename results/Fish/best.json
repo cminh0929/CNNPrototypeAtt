@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "Fish",
-    "timestamp": "2025-11-25T12:06:58.711976",
-    "run_id": "20251125_120658"
+    "timestamp": "2025-11-26T08:01:39.376241",
+    "run_id": "20251126_080139"
   },
   "performance": {
-    "test_accuracy": 0.7714285714285715,
-    "best_epoch": 40,
-    "total_epochs": 90,
-    "training_time_seconds": 22.934719800949097,
+    "test_accuracy": 0.6628571428571428,
+    "best_epoch": 14,
+    "total_epochs": 64,
+    "training_time_seconds": 15.557809114456177,
     "model_parameters": 278023
   },
   "dataset_info": {
@@ -49,20 +49,20 @@
   },
   "training_summary": {
     "loss": {
-      "min": 0.8522,
-      "final": 0.8948
+      "min": 1.1205,
+      "final": 1.1517
     },
     "train_accuracy": {
-      "best": 0.8914,
-      "final": 0.8571
+      "best": 0.8514,
+      "final": 0.7943
     },
     "test_accuracy": {
-      "best": 0.7714,
-      "final": 0.6286
+      "best": 0.6629,
+      "final": 0.4686
     },
     "generalization_gap": {
-      "at_best_epoch": 0.12,
-      "final": 0.2286
+      "at_best_epoch": 0.1886,
+      "final": 0.3257
     }
   }
 }

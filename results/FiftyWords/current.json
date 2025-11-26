@@ -1,15 +1,15 @@
 {
   "run_info": {
     "dataset": "FiftyWords",
-    "timestamp": "2025-11-25T17:34:23.024611",
-    "run_id": "20251125_173423"
+    "timestamp": "2025-11-26T08:00:29.475779",
+    "run_id": "20251126_080029"
   },
   "performance": {
-    "test_accuracy": 0.6461538461538462,
-    "best_epoch": 116,
-    "total_epochs": 166,
-    "training_time_seconds": 99.06785202026367,
-    "model_parameters": 311090
+    "test_accuracy": 0.6637362637362637,
+    "best_epoch": 254,
+    "total_epochs": 304,
+    "training_time_seconds": 190.51084733009338,
+    "model_parameters": 349490
   },
   "dataset_info": {
     "type": "UNIVARIATE",
@@ -49,20 +49,20 @@
   },
   "training_summary": {
     "loss": {
-      "min": 1.3815,
-      "final": 1.395
+      "min": 1.2106,
+      "final": 1.2702
     },
     "train_accuracy": {
-      "best": 0.8578,
-      "final": 0.8422
+      "best": 0.9222,
+      "final": 0.9067
     },
     "test_accuracy": {
-      "best": 0.6462,
-      "final": 0.6
+      "best": 0.6637,
+      "final": 0.6615
     },
     "generalization_gap": {
-      "at_best_epoch": 0.2116,
-      "final": 0.2422
+      "at_best_epoch": 0.2585,
+      "final": 0.2451
     }
   }
 }

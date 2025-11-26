@@ -1,30 +1,36 @@
-# Quickstart Guide
+# 🚀 Quickstart Guide
 
-## Prerequisites
+Get started with CNNProto in 5 minutes!
 
-Ensure you have Python 3.8 or higher installed.
+## ⚡ Quick Setup
 
-## Setup
+### 1. Install Dependencies
 
-1. Clone the repository:
-```bash
-git clone https://github.com/cminh0929/CNNPrototypeAtt.git
-cd CNNPrototypeAtt
-```
-
-2. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-## Download Dataset
+**Requirements:**
+- Python 3.8+
+- PyTorch 1.9+
+- CUDA (optional, for GPU acceleration)
 
-1. Visit the UCR Time Series Archive:
-   - https://www.cs.ucr.edu/~eamonn/time_series_data_2018/
+### 2. Prepare Datasets
 
-2. Download a dataset (e.g., GunPoint)
+CNNProto supports **automatic dataset loading** via `aeon` for UCR Archive datasets:
 
-3. Extract and place in `datasets/`:
+```bash
+# List all available datasets
+python main.py --list
+
+# Run on a dataset (auto-downloads if needed)
+python main.py --dataset GunPoint
+```
+
+**Manual Dataset Setup** (optional):
+
+If you prefer local files, download from [UCR Archive](https://www.cs.ucr.edu/~eamonn/time_series_data_2018/) and place in `datasets/`:
+
 ```
 datasets/
 └── GunPoint/
@@ -32,97 +38,153 @@ datasets/
     └── GunPoint_TEST.tsv
 ```
 
-## Run Training
+## 🎯 Basic Usage
 
-### List Available Datasets
-
-```bash
-python main.py --list
-```
-
-### Run on Single Dataset
+### Run Single Experiment
 
 ```bash
-# Run on default dataset (GunPoint)
+# Default dataset (GunPoint)
 python main.py
 
-# Run on specific dataset
+# Specific dataset
 python main.py --dataset ECG200
+
+# Custom seed for reproducibility
+python main.py --dataset Coffee --seed 42
 ```
 
-### Run on All Datasets
+### Run Benchmarks
 
 ```bash
+# All datasets sequentially
 python main.py --all
+
+# Windows batch script with multiple seeds
+run_benchmark.bat
 ```
 
-## Command-Line Options
+## 📊 Results & Outputs
 
-- `--dataset NAME`: Run experiment on specific dataset (default: GunPoint)
-- `--all`: Run experiments on all available datasets
-- `--list`: List all available datasets and exit
-- `--no-save`: Don't save results to disk
+### Directory Structure
 
-## Expected Output
-
-The script will:
-1. Load and preprocess the dataset
-2. Train the model with early stopping
-3. Evaluate on the test set
-4. Generate visualizations in the current directory
-5. Save results to `results/{dataset_name}/` directory
-
-## Results
-
-Results are automatically saved in JSON format:
 ```
 results/
 ├── GunPoint/
-│   ├── GunPoint_20251124_163525.json
-│   └── latest.json
-└── summary_20251124_171500.json (when using --all)
+│   ├── current.json          # Latest run results
+│   ├── best.json             # Best performance achieved
+│   ├── history.json          # All previous runs
+│   └── visualizations/
+│       ├── current/          # Latest visualizations
+│       └── best/             # Best run visualizations
+└── summary_YYYYMMDD_HHMMSS.json  # Benchmark summary
 ```
 
-Each result file contains:
-- Configuration used
-- Training history (loss, accuracy per epoch)
-- Final metrics (accuracy, training time, etc.)
-- Dataset information
+### Visualizations Generated
 
-## Configuration
+- **Training curves**: Loss and accuracy over epochs
+- **Confusion matrix**: Classification performance breakdown
+- **Prototype analysis**: Learned prototype patterns
+- **PCA visualization**: Feature space representation
+- **Sample predictions**: Model predictions on test samples
 
-To modify training parameters, edit `config.yaml`:
+## ⚙️ Configuration
+
+### Basic Configuration
+
+Edit `config/config.yaml` for global settings:
 
 ```yaml
 default:
   batch_size: 32
   epochs: 100
   learning_rate: 0.001
+  num_prototypes: 10
+  patience: 15
 ```
 
-For dataset-specific settings, add a section with the dataset name:
+### Dataset-Specific Overrides
+
+Create `config/{dataset_name}.yaml` for custom settings:
 
 ```yaml
-GunPoint:
-  batch_size: 16
-  epochs: 150
+# config/GunPoint.yaml
+batch_size: 16
+epochs: 150
+learning_rate: 0.0005
 ```
 
-## Common Datasets
+## 🎛️ Command-Line Options
 
-Small datasets for quick testing:
-- GunPoint (50 train, 150 test)
-- Coffee (28 train, 28 test)
-- ECG200 (100 train, 100 test)
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--dataset NAME` | Specify dataset to run | `GunPoint` |
+| `--all` | Run on all available datasets | `False` |
+| `--list` | List available datasets and exit | - |
+| `--seed N` | Set random seed | `42` |
+| `--no-save` | Skip saving results | `False` |
+| `--config PATH` | Custom config file | `config/config.yaml` |
 
-Medium datasets:
-- FordA (3601 train, 1320 test)
-- Wafer (1000 train, 6164 test)
+## 📈 Recommended Datasets
 
-## Troubleshooting
+### Quick Testing (< 1 min)
+- **GunPoint**: 50 train, 150 test, 2 classes
+- **Coffee**: 28 train, 28 test, 2 classes
+- **ItalyPowerDemand**: 67 train, 1029 test, 2 classes
 
-**CUDA out of memory**: Reduce `batch_size` in `config.yaml`
+### Standard Benchmarks (1-5 min)
+- **ECG200**: 100 train, 100 test, 2 classes
+- **FaceFour**: 24 train, 88 test, 4 classes
+- **Beef**: 30 train, 30 test, 5 classes
 
-**Dataset not found**: Verify the dataset folder structure matches the required format
+### Larger Datasets (5-30 min)
+- **FordA**: 3601 train, 1320 test, 2 classes
+- **Wafer**: 1000 train, 6164 test, 2 classes
+- **ElectricDevices**: 8926 train, 7711 test, 7 classes
 
-**Import errors**: Ensure all dependencies are installed via `pip install -r requirements.txt`
+## 🔧 Troubleshooting
+
+### CUDA Out of Memory
+```yaml
+# Reduce batch size in config.yaml
+batch_size: 16  # or 8
+```
+
+### Dataset Not Found
+```bash
+# Verify dataset name
+python main.py --list
+
+# Check datasets/ folder structure
+# Ensure TRAIN/TEST files match dataset name
+```
+
+### Import Errors
+```bash
+# Reinstall dependencies
+pip install -r requirements.txt --upgrade
+
+# Verify PyTorch installation
+python -c "import torch; print(torch.__version__)"
+```
+
+### Slow Training
+- Enable CUDA: Ensure PyTorch detects GPU
+- Reduce dataset size: Use smaller datasets for testing
+- Adjust `num_prototypes`: Lower values train faster
+
+## 📚 Next Steps
+
+- **Full Documentation**: See [README.md](README.md) for architecture details
+- **Custom Datasets**: Check `data/dataloader_manager.py` for format requirements
+- **Model Tuning**: Explore `config/` for advanced hyperparameters
+- **Benchmarking**: Use `run_benchmark.bat` for systematic evaluation
+
+## 💡 Tips
+
+1. **Start small**: Test with `GunPoint` or `Coffee` first
+2. **Monitor GPU**: Use `nvidia-smi` to check GPU utilization
+3. **Save best models**: Results are auto-tracked in `best.json`
+4. **Compare runs**: Check `history.json` for performance trends
+5. **Visualize results**: All plots saved in `visualizations/` folders
+
+---

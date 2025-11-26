@@ -17,7 +17,7 @@ default:
   save_checkpoint: false         
   plot_training: true           
   plot_pca: true
-  seed: 42
+  seed: 100
   device: auto
 
   # Data Augmentation

@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "ECG200",
-    "timestamp": "2025-11-25T11:37:00.992355",
-    "run_id": "20251125_113700"
+    "timestamp": "2025-11-26T07:25:37.327233",
+    "run_id": "20251126_072537"
   },
   "performance": {
-    "test_accuracy": 0.89,
-    "best_epoch": 26,
-    "total_epochs": 76,
-    "training_time_seconds": 12.241397857666016,
+    "test_accuracy": 0.91,
+    "best_epoch": 50,
+    "total_epochs": 100,
+    "training_time_seconds": 15.104357957839966,
     "model_parameters": 274178
   },
   "dataset_info": {
@@ -49,16 +49,16 @@
   },
   "training_summary": {
     "loss": {
-      "min": 0.218,
-      "final": 0.2351
+      "min": 0.1982,
+      "final": 0.2283
     },
     "train_accuracy": {
-      "best": 0.98,
-      "final": 0.96
+      "best": 1.0,
+      "final": 0.97
     },
     "test_accuracy": {
-      "best": 0.89,
-      "final": 0.86
+      "best": 0.91,
+      "final": 0.87
     },
     "generalization_gap": {
       "at_best_epoch": 0.09,

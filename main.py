@@ -24,7 +24,8 @@ def run_single_dataset(
     dataset_name: str,
     config_manager: ConfigManager,
     results_manager: ResultsManager,
-    save_results: bool = True
+    save_results: bool = True,
+    seed_override: Optional[int] = None
 ) -> Optional[Dict[str, Any]]:
     """Execute the complete training and evaluation pipeline for a single dataset.
 
@@ -33,6 +34,7 @@ def run_single_dataset(
         config_manager: Configuration manager instance.
         results_manager: Results manager instance.
         save_results: Whether to save results to disk.
+        seed_override: Optional seed to override config seed for benchmarking.
 
     Returns:
         Dictionary containing experiment results, or None if failed.
@@ -43,6 +45,12 @@ def run_single_dataset(
     try:
         # Load configuration
         config: Dict[str, Any] = config_manager.get_config(dataset_name, verbose=True)
+        
+        # Override seed if provided (for benchmarking)
+        if seed_override is not None:
+            config['seed'] = seed_override
+            print(f"[SEED OVERRIDE] Using seed: {seed_override}")
+        
         config_manager.print_config(dataset_name)
 
         # Set seed
@@ -228,13 +236,15 @@ def run_single_dataset(
 
 def run_all_datasets(
     config_manager: ConfigManager,
-    results_manager: ResultsManager
+    results_manager: ResultsManager,
+    seed_override: Optional[int] = None
 ) -> None:
     """Run experiments on all available datasets.
 
     Args:
         config_manager: Configuration manager instance.
         results_manager: Results manager instance.
+        seed_override: Optional seed to override config seed.
     """
     # Discover datasets
     datasets = discover_datasets()
@@ -257,7 +267,8 @@ def run_all_datasets(
             dataset_name=dataset_name,
             config_manager=config_manager,
             results_manager=results_manager,
-            save_results=True
+            save_results=True,
+            seed_override=seed_override
         )
 
         if result is not None:
@@ -278,12 +289,13 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  python main.py                      # Run on default dataset (GunPoint)
-  python main.py --dataset ECG200     # Run on specific dataset
-  python main.py --all                # Run on all available datasets
-  python main.py --list               # List available datasets
-  python main.py --info               # Show info for all datasets
-  python main.py --dataset ECG200 --info  # Show info for specific dataset
+  python main.py                          # Run on default dataset (GunPoint)
+  python main.py --dataset ECG200         # Run on specific dataset
+  python main.py --all                    # Run on all available datasets
+  python main.py --all --seed 20          # Run all datasets with seed 20
+  python main.py --dataset ECG200 --seed 42  # Run specific dataset with seed 42
+  python main.py --list                   # List available datasets
+  python main.py --info                   # Show info for all datasets
         """
     )
 
@@ -316,6 +328,13 @@ Examples:
         '--info',
         action='store_true',
         help='Show detailed information about datasets without training'
+    )
+
+    parser.add_argument(
+        '--seed',
+        type=int,
+        default=None,
+        help='Random seed to override config.yaml (e.g., --seed 42)'
     )
 
     args = parser.parse_args()
@@ -353,7 +372,7 @@ Examples:
 
     # Handle --all flag
     if args.all:
-        run_all_datasets(config_manager, results_manager)
+        run_all_datasets(config_manager, results_manager, seed_override=args.seed)
         sys.exit(0)
 
     # Run single dataset
@@ -371,7 +390,8 @@ Examples:
         dataset_name=dataset_name,
         config_manager=config_manager,
         results_manager=results_manager,
-        save_results=not args.no_save
+        save_results=not args.no_save,
+        seed_override=args.seed
     )
 
 

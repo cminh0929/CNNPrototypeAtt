@@ -1,14 +1,14 @@
 {
   "run_info": {
     "dataset": "FacesUCR",
-    "timestamp": "2025-11-25T17:32:33.317065",
-    "run_id": "20251125_173233"
+    "timestamp": "2025-11-26T07:56:58.843557",
+    "run_id": "20251126_075658"
   },
   "performance": {
-    "test_accuracy": 0.9556097560975609,
-    "best_epoch": 119,
-    "total_epochs": 169,
-    "training_time_seconds": 159.8215296268463,
+    "test_accuracy": 0.953170731707317,
+    "best_epoch": 107,
+    "total_epochs": 157,
+    "training_time_seconds": 95.98664259910583,
     "model_parameters": 283406
   },
   "dataset_info": {
@@ -49,20 +49,20 @@
   },
   "training_summary": {
     "loss": {
-      "min": 0.5653,
-      "final": 0.5722
+      "min": 0.5664,
+      "final": 0.5799
     },
     "train_accuracy": {
       "best": 1.0,
       "final": 1.0
     },
     "test_accuracy": {
-      "best": 0.9556,
-      "final": 0.9502
+      "best": 0.9532,
+      "final": 0.9517
     },
     "generalization_gap": {
-      "at_best_epoch": 0.0444,
-      "final": 0.0498
+      "at_best_epoch": 0.0468,
+      "final": 0.0483
     }
   }
 }

@@ -1,15 +1,15 @@
 {
   "run_info": {
     "dataset": "GunPoint",
-    "timestamp": "2025-11-25T00:12:30.383786",
-    "run_id": "20251125_001230"
+    "timestamp": "2025-11-26T04:18:57.412409",
+    "run_id": "20251126_041857"
   },
   "performance": {
     "test_accuracy": 1.0,
-    "best_epoch": 53,
-    "total_epochs": 73,
-    "training_time_seconds": 2.4947075843811035,
-    "model_parameters": 145666
+    "best_epoch": 34,
+    "total_epochs": 84,
+    "training_time_seconds": 8.952569484710693,
+    "model_parameters": 274178
   },
   "dataset_info": {
     "type": "UNIVARIATE",
@@ -20,18 +20,37 @@
     "test_samples": 150
   },
   "hyperparameters": {
-    "num_prototypes": 16,
-    "dropout": 0.0,
-    "temperature": 0.3,
-    "batch_size": 32,
+    "num_prototypes": null,
+    "dropout": 0.1,
+    "temperature": 0.5,
+    "batch_size": 8,
     "learning_rate": 0.0005,
     "weight_decay": 0.0001,
-    "diversity_weight": 0.01
+    "diversity_weight": 0.01,
+    "use_augmentation": true,
+    "augmentation_config": {
+      "jitter_std": 0.03,
+      "scaling_range": [
+        0.8,
+        1.2
+      ],
+      "time_warp_strength": 0.2,
+      "window_slice_ratio": 0.9,
+      "rotation_prob": 0.5,
+      "augment_prob": 0.5
+    },
+    "use_projection": true,
+    "projection_dim": null,
+    "clustering_weight": 0.1,
+    "clustering_config": {
+      "compactness_weight": 1.0,
+      "separation_weight": 0.5
+    }
   },
   "training_summary": {
     "loss": {
-      "min": 0.0158,
-      "final": 0.0158
+      "min": 0.1779,
+      "final": 0.1882
     },
     "train_accuracy": {
       "best": 1.0,

@@ -1,58 +1,18 @@
 [
   {
-    "timestamp": "2025-11-25T00:12:38.933804",
-    "run_id": "20251125_001238",
-    "accuracy": 0.35,
-    "epochs": 25,
-    "training_time": 0.82086181640625,
+    "timestamp": "2025-11-26T04:29:51.074747",
+    "run_id": "20251126_042951",
+    "accuracy": 0.6166666666666667,
+    "epochs": 72,
+    "training_time": 7.399551868438721,
     "is_best": true
   },
   {
-    "timestamp": "2025-11-25T00:23:50.264819",
-    "run_id": "20251125_002350",
-    "accuracy": 0.8333333333333334,
-    "epochs": 117,
-    "training_time": 13.416933536529541,
-    "is_best": true
-  },
-  {
-    "timestamp": "2025-11-25T09:37:51.190737",
-    "run_id": "20251125_093751",
-    "accuracy": 0.5666666666666667,
-    "epochs": 61,
-    "training_time": 4.738683462142944,
-    "is_best": false
-  },
-  {
-    "timestamp": "2025-11-25T09:59:47.199935",
-    "run_id": "20251125_095947",
-    "accuracy": 0.6,
-    "epochs": 71,
-    "training_time": 5.812601566314697,
-    "is_best": false
-  },
-  {
-    "timestamp": "2025-11-25T10:12:57.988232",
-    "run_id": "20251125_101257",
-    "accuracy": 0.6,
-    "epochs": 71,
-    "training_time": 5.6462883949279785,
-    "is_best": false
-  },
-  {
-    "timestamp": "2025-11-25T12:30:18.250198",
-    "run_id": "20251125_123018",
-    "accuracy": 0.7,
-    "epochs": 64,
-    "training_time": 6.760478734970093,
-    "is_best": false
-  },
-  {
-    "timestamp": "2025-11-25T18:07:14.092764",
-    "run_id": "20251125_180714",
-    "accuracy": 0.7,
-    "epochs": 64,
-    "training_time": 5.748035430908203,
+    "timestamp": "2025-11-26T08:33:35.764648",
+    "run_id": "20251126_083335",
+    "accuracy": 0.5833333333333334,
+    "epochs": 68,
+    "training_time": 6.297442436218262,
     "is_best": false
   }
 ]
